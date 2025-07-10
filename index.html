@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -22,7 +23,7 @@
         .sidebar-link:hover, .sidebar-link.active { background-color: #4b5563; }
         .content-section { display: none; }
         .content-section.active { display: block; }
-        .stat-card { background-color: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+        .stat-card { background-color: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); transition: background-color 0.2s; }
         #barcode-scanner-view { border: 2px solid #f97316; border-radius: 0.5rem; }
         
         /* Print Styles for Receipt */
@@ -65,7 +66,7 @@
             </nav>
             <main class="flex-1 p-6 md:p-10 bg-slate-100 overflow-y-auto">
                 <header class="mb-8"><h1 id="page-title" class="text-4xl font-bold text-slate-800">Overview</h1></header>
-                <div id="overview-section" class="content-section active"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Sales</h3><p id="stat-today-sales" class="text-3xl font-bold text-slate-800">Ksh 0.00</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Profit</h3><p id="stat-today-profit" class="text-3xl font-bold text-green-600">Ksh 0.00</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Low Stock Items</h3><p id="stat-low-stock" class="text-3xl font-bold text-orange-500">0</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Total Products</h3><p id="stat-total-products" class="text-3xl font-bold text-slate-800">0</p></div></div></div>
+                <div id="overview-section" class="content-section active"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Sales</h3><p id="stat-today-sales" class="text-3xl font-bold text-slate-800">Ksh 0.00</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Profit</h3><p id="stat-today-profit" class="text-3xl font-bold text-green-600">Ksh 0.00</p></div><div id="low-stock-card" class="stat-card hover:bg-orange-50 cursor-pointer"><h3 class="text-slate-500 font-semibold">Low Stock Items</h3><p id="stat-low-stock" class="text-3xl font-bold text-orange-500">0</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Total Products</h3><p id="stat-total-products" class="text-3xl font-bold text-slate-800">0</p></div></div></div>
                 <div id="products-section" class="content-section"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-slate-800">Product Management</h2><button id="add-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg"><i class="fas fa-plus mr-2"></i>Add New Product</button></div><div class="bg-white p-4 rounded-lg shadow"><div id="product-list-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
                 <div id="inventory-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Inventory Levels</h2><div id="inventory-list-container"></div></div></div>
                 <div id="reports-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">All Sales Transactions</h2><div id="sales-report-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
@@ -74,23 +75,39 @@
         </div>
     </div>
 
-    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
+    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
     
+    <!-- Modals -->
     <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (Ksh)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
     <div id="scanner-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4">Scan Barcode</h3><div id="barcode-scanner-view" class="w-full"></div><button id="close-scanner-btn" class="mt-4 w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600">Cancel</button></div></div>
-    <div id="receipt-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-slate-800"><div id="receipt-container"></div><div class="mt-6 flex space-x-2"><button id="close-receipt-btn" class="flex-1 bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button><button id="print-receipt-btn" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Print Receipt</button></div></div></div>
-    
+    <div id="receipt-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-slate-800"><div id="receipt-container" class="bg-white p-2"></div><div class="mt-6 flex space-x-2"><button id="close-receipt-btn" class="flex-1 bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button><button id="download-receipt-btn" class="flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700"><i class="fas fa-download mr-2"></i>Download</button><button id="print-receipt-btn" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700"><i class="fas fa-print mr-2"></i>Print</button></div></div></div>
+    <div id="low-stock-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4 text-orange-500">Low Stock Items</h3><div id="low-stock-list-container" class="max-h-[60vh] overflow-y-auto"></div><div class="mt-6 flex justify-end"><button type="button" id="close-low-stock-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button></div></div></div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, query, orderBy, where, getDocs, writeBatch, serverTimestamp, increment, setDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, query, orderBy, where, getDocs, writeBatch, serverTimestamp, increment, setDoc, updateDoc, deleteDoc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             const firebaseConfig = { apiKey: "AIzaSyDvai9ngziMFmrZiHclzTu1R5wVr0-xf9U", authDomain: "smart-suppliers.firebaseapp.com", projectId: "smart-suppliers", storageBucket: "smart-suppliers.appspot.com", messagingSenderId: "695784334948", appId: "1:695784334948:web:dda5b9b89c686a42476171", measurementId: "G-Q1BFZM7W93" };
             
             let app, auth, db;
-            try { app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app); } 
-            catch (e) { document.body.innerHTML = `<div class="text-center p-10"><h1 class="text-red-500 font-bold text-2xl">Connection Error</h1></div>`; return; }
+            try { 
+                app = initializeApp(firebaseConfig); 
+                auth = getAuth(app); 
+                db = getFirestore(app);
+                await enableIndexedDbPersistence(db);
+                console.log("Offline persistence enabled.");
+            } catch (err) { 
+                if (err.code == 'failed-precondition') {
+                    console.warn("Multiple tabs open, persistence can only be enabled in one. Not a critical error.");
+                } else if (err.code == 'unimplemented') {
+                    console.warn("The current browser does not support all of the features required to enable persistence.");
+                } else {
+                    document.body.innerHTML = `<div class="text-center p-10"><h1 class="text-red-500 font-bold text-2xl">Connection Error</h1><p>${err.message}</p></div>`; 
+                    return;
+                }
+            }
 
             const authContainer = document.getElementById('auth-container');
             const loginForm = document.getElementById('login-form');
@@ -99,6 +116,18 @@
             let allProducts = [];
             let currentUserProfile = null;
             
+            const offlineIndicator = document.getElementById('offline-indicator');
+            const updateOnlineStatus = () => {
+                if (navigator.onLine) {
+                    offlineIndicator.classList.add('hidden');
+                } else {
+                    offlineIndicator.classList.remove('hidden');
+                }
+            };
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     const userDocRef = doc(db, "users", user.uid);
@@ -139,6 +168,13 @@
             const inventoryListContainer = document.getElementById('inventory-list-container');
             const userListContainer = document.getElementById('user-list-container');
             const productListContainer = document.getElementById('product-list-container');
+            const lowStockCard = document.getElementById('low-stock-card');
+            const lowStockModal = document.getElementById('low-stock-modal');
+            const closeLowStockModalBtn = document.getElementById('close-low-stock-modal-btn');
+            const lowStockListContainer = document.getElementById('low-stock-list-container');
+
+            lowStockCard.addEventListener('click', () => lowStockModal.classList.remove('hidden'));
+            closeLowStockModalBtn.addEventListener('click', () => lowStockModal.classList.add('hidden'));
 
             function listenForAdminData() {
                 const salesQuery = query(collection(db, "sales"), orderBy("createdAt", "desc"));
@@ -162,16 +198,21 @@
                 const productsQuery = query(collection(db, "products"), orderBy("name"));
                 onSnapshot(productsQuery, (snapshot) => {
                     let lowStockCount = 0;
+                    const lowStockItems = [];
                     allProducts = [];
                     snapshot.forEach(doc => {
                         const product = { id: doc.id, ...doc.data() };
                         allProducts.push(product);
-                        if (product.stock <= 5) lowStockCount++;
+                        if (product.stock <= 5) {
+                            lowStockCount++;
+                            lowStockItems.push(product);
+                        }
                     });
                     statTotalProducts.textContent = snapshot.size;
                     statLowStock.textContent = lowStockCount;
                     renderInventoryList(allProducts);
                     renderProductList(allProducts);
+                    renderLowStockList(lowStockItems);
                 });
 
                 const usersQuery = query(collection(db, "users"), orderBy("name"));
@@ -200,6 +241,25 @@
                 });
             }
 
+            function renderLowStockList(lowStockItems) {
+                if (lowStockItems.length === 0) {
+                    lowStockListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No items are currently low on stock.</p>';
+                    return;
+                }
+                lowStockListContainer.innerHTML = `
+                    <div class="space-y-2">
+                        ${lowStockItems.map(p => `
+                            <div class="flex justify-between items-center bg-slate-50 p-3 rounded-md">
+                                <p class="font-semibold">${p.name}</p>
+                                <p class="text-sm font-bold ${p.stock === 0 ? 'text-red-600' : 'text-orange-600'}">
+                                    Stock: ${p.stock}
+                                </p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
             function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Time</th><th class="p-3">Cashier</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleDateString()}</td><td class="p-3">${s.createdAt.toDate().toLocaleTimeString()}</td><td class="p-3">${s.cashierName || 'N/A'}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderInventoryList(inventory) { if (inventory.length === 0) { inventoryListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products in inventory.</p>'; return; } inventoryListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product</th><th class="p-3 text-right">Stock</th><th class="p-3 text-right">Cost Value</th></tr></thead><tbody class="divide-y divide-slate-200">${inventory.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right ${p.stock <= 5 ? 'text-red-500 font-bold' : ''}">${p.stock}</td><td class="p-3 text-right">Ksh ${(p.stock * p.costPrice).toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderUserList(users) { if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; } userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role}</p></div><button data-id="${u.id}" data-name="${u.name}" class="delete-user-btn text-red-500 hover:text-red-700 text-sm font-semibold">Delete</button></div>`).join('')}</div>`; }
@@ -214,10 +274,10 @@
             document.getElementById('close-product-modal-btn').addEventListener('click', () => addProductModal.classList.add('hidden'));
             productForm.addEventListener('submit', async (e) => { e.preventDefault(); const productId = document.getElementById('product-id').value; const productData = { name: document.getElementById('product-name').value, barcode: document.getElementById('product-barcode').value, costPrice: parseFloat(document.getElementById('product-cost').value), sellingPrice: parseFloat(document.getElementById('product-price').value), stock: parseInt(document.getElementById('product-stock').value), lastUpdated: serverTimestamp() }; try { if (productId) { await updateDoc(doc(db, "products", productId), productData); alert("Product updated!"); } else { productData.createdAt = serverTimestamp(); await addDoc(collection(db, "products"), productData); alert("Product added!"); } addProductModal.classList.add('hidden'); } catch (error) { alert("Error saving product: " + error.message); } });
             productListContainer.addEventListener('click', (e) => {
-                if (e.target.classList.contains('edit-product-btn')) { const product = JSON.parse(e.target.dataset.product); document.getElementById('modal-title').textContent = 'Edit Product'; document.getElementById('product-id').value = product.id; document.getElementById('product-name').value = product.name; document.getElementById('product-barcode').value = product.barcode; document.getElementById('product-cost').value = product.costPrice; document.getElementById('product-price').value = product.sellingPrice; document.getElementById('product-stock').value = product.stock; document.getElementById('save-product-btn').textContent = 'Update Product'; addProductModal.classList.remove('hidden'); }
-                if (e.target.classList.contains('delete-product-btn')) { const productId = e.target.dataset.id; const productName = e.target.dataset.name; if (confirm(`Delete "${productName}"?`)) { deleteDoc(doc(db, "products", productId)); } }
+                if (e.target.closest('.edit-product-btn')) { const product = JSON.parse(e.target.closest('.edit-product-btn').dataset.product); document.getElementById('modal-title').textContent = 'Edit Product'; document.getElementById('product-id').value = product.id; document.getElementById('product-name').value = product.name; document.getElementById('product-barcode').value = product.barcode; document.getElementById('product-cost').value = product.costPrice; document.getElementById('product-price').value = product.sellingPrice; document.getElementById('product-stock').value = product.stock; document.getElementById('save-product-btn').textContent = 'Update Product'; addProductModal.classList.remove('hidden'); }
+                if (e.target.closest('.delete-product-btn')) { const btn = e.target.closest('.delete-product-btn'); const productId = btn.dataset.id; const productName = btn.dataset.name; if (confirm(`Delete "${productName}"?`)) { deleteDoc(doc(db, "products", productId)); } }
             });
-            userListContainer.addEventListener('click', (e) => { if (e.target.classList.contains('delete-user-btn')) { const userId = e.target.dataset.id; const userName = e.target.dataset.name; if (confirm(`Delete user "${userName}"? This will only remove their data, not their login.`)) { deleteDoc(doc(db, "users", userId)); alert("User data deleted. Please remove their login from the Firebase Authentication console manually."); } } });
+            userListContainer.addEventListener('click', (e) => { if (e.target.closest('.delete-user-btn')) { const btn = e.target.closest('.delete-user-btn'); const userId = btn.dataset.id; const userName = btn.dataset.name; if (confirm(`Delete user "${userName}"? This will only remove their data, not their login.`)) { deleteDoc(doc(db, "users", userId)); alert("User data deleted. Please remove their login from the Firebase Authentication console manually."); } } });
 
             const productGrid = document.getElementById('product-grid');
             const cartItemsContainer = document.getElementById('cart-items');
@@ -227,13 +287,22 @@
             function addProductToCart(product) { if (product.stock <= 0) { alert(`${product.name} is out of stock.`); return; } const existingItem = currentCart.find(item => item.id === product.id); if (existingItem) { if (existingItem.qty < product.stock) { existingItem.qty++; } else { alert(`No more stock available for ${product.name}.`); } } else { currentCart.push({ ...product, qty: 1 }); } renderCart(); }
             function removeFromCart(productId) { const itemIndex = currentCart.findIndex(item => item.id === productId); if (itemIndex > -1) { if (currentCart[itemIndex].qty > 1) { currentCart[itemIndex].qty--; } else { currentCart.splice(itemIndex, 1); } } renderCart(); }
             function renderCart() { if (currentCart.length === 0) { cartItemsContainer.innerHTML = '<p class="text-slate-500 text-center mt-10">Cart is empty</p>'; completeSaleBtn.disabled = true; } else { cartItemsContainer.innerHTML = ''; currentCart.forEach(item => { const cartItemEl = document.createElement('div'); cartItemEl.className = 'flex items-center justify-between bg-slate-50 p-2 rounded-md'; cartItemEl.innerHTML = `<div><div class="font-semibold text-slate-700">${item.name}</div><div class="text-sm text-slate-500">Ksh ${item.sellingPrice.toFixed(2)}</div></div><div class="flex items-center space-x-2"><button data-id="${item.id}" class="remove-from-cart-btn text-red-500 font-bold px-2">-</button><span class="font-bold w-6 text-center">${item.qty}</span><button data-id="${item.id}" class="add-to-cart-btn text-green-500 font-bold px-2">+</button></div>`; cartItemsContainer.appendChild(cartItemEl); }); completeSaleBtn.disabled = false; } updateTotals(); }
-            cartItemsContainer.addEventListener('click', (e) => { if (e.target.classList.contains('add-to-cart-btn')) { const product = allProducts.find(p => p.id === e.target.dataset.id); if(product) addProductToCart(product); } else if (e.target.classList.contains('remove-from-cart-btn')) { removeFromCart(e.target.dataset.id); } });
+            cartItemsContainer.addEventListener('click', (e) => { if (e.target.closest('.add-to-cart-btn')) { const product = allProducts.find(p => p.id === e.target.closest('.add-to-cart-btn').dataset.id); if(product) addProductToCart(product); } else if (e.target.closest('.remove-from-cart-btn')) { removeFromCart(e.target.closest('.remove-from-cart-btn').dataset.id); } });
             function updateTotals() { const subtotal = currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0); const vat = subtotal * 0.16; const total = subtotal + vat; document.getElementById('cart-subtotal').textContent = `Ksh ${subtotal.toFixed(2)}`; document.getElementById('cart-vat').textContent = `Ksh ${vat.toFixed(2)}`; document.getElementById('cart-total').textContent = `Ksh ${total.toFixed(2)}`; }
             
             const receiptModal = document.getElementById('receipt-modal');
             const receiptContainer = document.getElementById('receipt-container');
             document.getElementById('close-receipt-btn').addEventListener('click', () => receiptModal.classList.add('hidden'));
             document.getElementById('print-receipt-btn').addEventListener('click', () => window.print());
+            document.getElementById('download-receipt-btn').addEventListener('click', () => {
+                const receiptElement = document.getElementById('receipt-container');
+                html2canvas(receiptElement).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `receipt-${new Date().toISOString().slice(0,16).replace('T', '_').replace(':', '-')}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            });
 
             completeSaleBtn.addEventListener('click', async () => {
                 if (currentCart.length === 0) return; if (!confirm("Proceed to complete this sale?")) return;

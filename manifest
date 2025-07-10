@@ -1,0 +1,24 @@
+{
+  "name": "Smart Suppliers POS",
+  "short_name": "SmartPOS",
+  "description": "Point of Sale system for Smart Suppliers.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://placehold.co/192x192/f97316/ffffff?text=SS",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://placehold.co/512x512/f97316/ffffff?text=SS",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}

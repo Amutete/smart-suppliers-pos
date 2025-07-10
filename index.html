@@ -16,6 +16,8 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .smart-suppliers-logo { font-weight: 900; letter-spacing: -0.05em; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        .smart-suppliers-logo .smart { color: #2c4c72; }
+        .smart-suppliers-logo .suppliers { color: #a62b24; }
         .sidebar-link { display: flex; align-items: center; padding: 0.75rem 1rem; border-radius: 0.5rem; transition: background-color 0.2s; cursor: pointer; }
         .sidebar-link:hover, .sidebar-link.active { background-color: #4b5563; }
         .content-section { display: none; }
@@ -35,7 +37,7 @@
 
     <div id="auth-container" class="min-h-screen bg-slate-200 flex items-center justify-center p-4">
         <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
-            <h1 class="text-5xl font-black text-blue-600 smart-suppliers-logo text-center">SMART SUPPLIERS</h1>
+            <h1 class="text-5xl font-black text-blue-600 smart-suppliers-logo text-center"><span class="smart">SMART</span> <span class="suppliers">SUPPLIERS</span></h1>
             <p class="text-center text-slate-500 mt-2 mb-6">Point of Sale System</p>
             <div id="login-error-message" class="mb-4 text-center text-red-500 font-medium h-5"></div>
             <form id="login-form">
@@ -50,7 +52,7 @@
         <div class="flex h-screen bg-slate-800 text-white">
             <nav class="w-64 flex-shrink-0 bg-slate-900 p-4 flex flex-col justify-between">
                 <div>
-                    <h2 class="text-2xl font-bold text-center text-orange-500 mb-8 border-b border-gray-700 pb-4 smart-suppliers-logo">SMART SUPPLIERS</h2>
+                    <h2 class="text-2xl font-bold text-center text-orange-500 mb-8 border-b border-gray-700 pb-4 smart-suppliers-logo"><span class="smart">SMART</span> <span class="suppliers">SUPPLIERS</span></h2>
                     <ul class="space-y-2">
                         <li><div class="sidebar-link active" data-target="overview"><i class="fas fa-tachometer-alt w-6 mr-3"></i>Overview</div></li>
                         <li><div class="sidebar-link" data-target="products"><i class="fas fa-box-open w-6 mr-3"></i>Products</div></li>
@@ -67,7 +69,7 @@
                 <div id="products-section" class="content-section"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-slate-800">Product Management</h2><button id="add-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg"><i class="fas fa-plus mr-2"></i>Add New Product</button></div><div class="bg-white p-4 rounded-lg shadow"><div id="product-list-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
                 <div id="inventory-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Inventory Levels</h2><div id="inventory-list-container"></div></div></div>
                 <div id="reports-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">All Sales Transactions</h2><div id="sales-report-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
-                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
+                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
             </main>
         </div>
     </div>
@@ -80,7 +82,7 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, query, orderBy, where, getDocs, writeBatch, serverTimestamp, increment, setDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -95,6 +97,7 @@
             const loginErrorMessage = document.getElementById('login-error-message');
             const dashboards = { admin: document.getElementById('admin-dashboard'), servant: document.getElementById('servant-dashboard') };
             let allProducts = [];
+            let currentUserProfile = null;
             
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
@@ -102,16 +105,19 @@
                     try {
                         const userDoc = await getDoc(userDocRef);
                         if (userDoc.exists()) {
-                            const role = userDoc.data().role;
+                            currentUserProfile = userDoc.data();
+                            const role = currentUserProfile.role;
                             authContainer.style.display = 'none';
                             Object.values(dashboards).forEach(d => d.classList.add('hidden'));
                             if (dashboards[role]) { 
                                 dashboards[role].classList.remove('hidden'); 
                                 if (role === 'admin') { listenForAdminData(); }
+                                else if (role === 'servant') { listenForServantData(); }
                             } else { loginErrorMessage.textContent = `Your user role is not supported.`; await signOut(auth); }
                         } else { loginErrorMessage.textContent = "Profile not found in database."; await signOut(auth); }
                     } catch(e) { loginErrorMessage.textContent = `Error: ${e.code}. Check Rules.`; console.error(e); await signOut(auth); }
                 } else {
+                    currentUserProfile = null;
                     authContainer.style.display = 'flex';
                     Object.values(dashboards).forEach(d => d.classList.add('hidden'));
                 }
@@ -175,14 +181,32 @@
                     renderUserList(users);
                 });
             }
+            
+            function listenForServantData() {
+                const posProductsQuery = query(collection(db, "products"), orderBy("name"));
+                onSnapshot(posProductsQuery, (querySnapshot) => { 
+                    allProducts = [];
+                    productGrid.innerHTML = ''; 
+                    if (querySnapshot.empty) { productGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center mt-10">No products in database.</p>'; return; } 
+                    querySnapshot.forEach((doc) => { 
+                        const product = { id: doc.id, ...doc.data() }; 
+                        allProducts.push(product);
+                        const productCard = document.createElement('div'); 
+                        productCard.className = 'bg-white p-3 rounded-lg shadow-md cursor-pointer hover:scale-105 hover:shadow-xl transition-transform'; 
+                        productCard.innerHTML = `<div class="font-bold text-slate-800 truncate">${product.name}</div><div class="text-sm text-slate-500">Stock: ${product.stock}</div><div class="text-lg font-bold text-orange-500 mt-2">Ksh ${product.sellingPrice.toFixed(2)}</div>`; 
+                        productCard.addEventListener('click', () => addProductToCart(product)); 
+                        productGrid.appendChild(productCard); 
+                    }); 
+                });
+            }
 
-            function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleString()}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
+            function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Time</th><th class="p-3">Cashier</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleDateString()}</td><td class="p-3">${s.createdAt.toDate().toLocaleTimeString()}</td><td class="p-3">${s.cashierName || 'N/A'}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderInventoryList(inventory) { if (inventory.length === 0) { inventoryListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products in inventory.</p>'; return; } inventoryListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product</th><th class="p-3 text-right">Stock</th><th class="p-3 text-right">Cost Value</th></tr></thead><tbody class="divide-y divide-slate-200">${inventory.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right ${p.stock <= 5 ? 'text-red-500 font-bold' : ''}">${p.stock}</td><td class="p-3 text-right">Ksh ${(p.stock * p.costPrice).toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderUserList(users) { if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; } userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role}</p></div><button data-id="${u.id}" data-name="${u.name}" class="delete-user-btn text-red-500 hover:text-red-700 text-sm font-semibold">Delete</button></div>`).join('')}</div>`; }
             function renderProductList(products) { if (products.length === 0) { productListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products found.</p>'; return; } productListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product Name</th><th class="p-3 text-right">Price</th><th class="p-3 text-right">Stock</th><th class="p-3">Actions</th></tr></thead><tbody class="divide-y divide-slate-200">${products.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right font-bold">Ksh ${p.sellingPrice.toFixed(2)}</td><td class="p-3 text-right">${p.stock}</td><td class="p-3 space-x-2"><button data-product='${JSON.stringify(p)}' class="edit-product-btn text-blue-500 hover:underline text-xs">Edit</button><button data-id="${p.id}" data-name="${p.name}" class="delete-product-btn text-red-500 hover:underline text-xs">Delete</button></td></tr>`).join('')}</tbody></table>`; }
 
             const createServantForm = document.getElementById('create-servant-form');
-            createServantForm.addEventListener('submit', async (e) => { e.preventDefault(); const name = document.getElementById('servant-name').value; const email = document.getElementById('servant-email').value; const password = document.getElementById('servant-password').value; if (!confirm(`Create servant account for ${name}?`)) return; const tempApp = initializeApp(firebaseConfig, "secondary"); const tempAuth = getAuth(tempApp); try { const userCredential = await createUserWithEmailAndPassword(tempAuth, email, password); await setDoc(doc(db, "users", userCredential.user.uid), { uid: userCredential.user.uid, name: name, email: email, role: 'servant', createdAt: serverTimestamp() }); alert(`Successfully created account for ${name}.`); createServantForm.reset(); } catch (error) { alert("Error: " + error.message); } finally { await signOut(tempAuth); } });
+            createServantForm.addEventListener('submit', async (e) => { e.preventDefault(); const name = document.getElementById('servant-name').value; const email = document.getElementById('servant-email').value; const password = document.getElementById('servant-password').value; if (!confirm(`Create servant account for ${name}?`)) return; const tempApp = initializeApp(firebaseConfig, "secondary" + new Date().getTime()); const tempAuth = getAuth(tempApp); try { const userCredential = await createUserWithEmailAndPassword(tempAuth, email, password); await updateProfile(userCredential.user, { displayName: name }); await setDoc(doc(db, "users", userCredential.user.uid), { uid: userCredential.user.uid, name: name, email: email, role: 'servant', createdAt: serverTimestamp() }); alert(`Successfully created account for ${name}.`); createServantForm.reset(); } catch (error) { alert("Error: " + error.message); } finally { await signOut(tempAuth); } });
 
             const addProductModal = document.getElementById('add-product-modal');
             const productForm = document.getElementById('product-form');
@@ -199,8 +223,7 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const completeSaleBtn = document.getElementById('complete-sale-btn');
             let currentCart = [];
-            const posProductsQuery = query(collection(db, "products"), orderBy("name"));
-            onSnapshot(posProductsQuery, (querySnapshot) => { productGrid.innerHTML = ''; if (querySnapshot.empty) { productGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center mt-10">No products in database.</p>'; return; } querySnapshot.forEach((doc) => { const product = { id: doc.id, ...doc.data() }; const productCard = document.createElement('div'); productCard.className = 'bg-white p-3 rounded-lg shadow-md cursor-pointer hover:scale-105 hover:shadow-xl transition-transform'; productCard.innerHTML = `<div class="font-bold text-slate-800 truncate">${product.name}</div><div class="text-sm text-slate-500">Stock: ${product.stock}</div><div class="text-lg font-bold text-orange-500 mt-2">Ksh ${product.sellingPrice.toFixed(2)}</div>`; productCard.addEventListener('click', () => addProductToCart(product)); productGrid.appendChild(productCard); }); });
+            
             function addProductToCart(product) { if (product.stock <= 0) { alert(`${product.name} is out of stock.`); return; } const existingItem = currentCart.find(item => item.id === product.id); if (existingItem) { if (existingItem.qty < product.stock) { existingItem.qty++; } else { alert(`No more stock available for ${product.name}.`); } } else { currentCart.push({ ...product, qty: 1 }); } renderCart(); }
             function removeFromCart(productId) { const itemIndex = currentCart.findIndex(item => item.id === productId); if (itemIndex > -1) { if (currentCart[itemIndex].qty > 1) { currentCart[itemIndex].qty--; } else { currentCart.splice(itemIndex, 1); } } renderCart(); }
             function renderCart() { if (currentCart.length === 0) { cartItemsContainer.innerHTML = '<p class="text-slate-500 text-center mt-10">Cart is empty</p>'; completeSaleBtn.disabled = true; } else { cartItemsContainer.innerHTML = ''; currentCart.forEach(item => { const cartItemEl = document.createElement('div'); cartItemEl.className = 'flex items-center justify-between bg-slate-50 p-2 rounded-md'; cartItemEl.innerHTML = `<div><div class="font-semibold text-slate-700">${item.name}</div><div class="text-sm text-slate-500">Ksh ${item.sellingPrice.toFixed(2)}</div></div><div class="flex items-center space-x-2"><button data-id="${item.id}" class="remove-from-cart-btn text-red-500 font-bold px-2">-</button><span class="font-bold w-6 text-center">${item.qty}</span><button data-id="${item.id}" class="add-to-cart-btn text-green-500 font-bold px-2">+</button></div>`; cartItemsContainer.appendChild(cartItemEl); }); completeSaleBtn.disabled = false; } updateTotals(); }
@@ -214,7 +237,7 @@
 
             completeSaleBtn.addEventListener('click', async () => {
                 if (currentCart.length === 0) return; if (!confirm("Proceed to complete this sale?")) return;
-                const saleData = { items: currentCart.map(item => ({ id: item.id, name: item.name, qty: item.qty, price: item.sellingPrice })), subtotal: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0), vat: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 0.16, total: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 1.16, cashierId: auth.currentUser.uid, createdAt: serverTimestamp() };
+                const saleData = { items: currentCart.map(item => ({ id: item.id, name: item.name, qty: item.qty, price: item.sellingPrice })), subtotal: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0), vat: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 0.16, total: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 1.16, cashierId: auth.currentUser.uid, cashierName: currentUserProfile.name, createdAt: serverTimestamp() };
                 try {
                     const batch = writeBatch(db); const salesRef = doc(collection(db, "sales")); batch.set(salesRef, saleData);
                     currentCart.forEach(item => { const productRef = doc(db, "products", item.id); batch.update(productRef, { stock: increment(-item.qty) }); });
@@ -228,7 +251,7 @@
                 const now = new Date();
                 receiptContainer.innerHTML = `
                     <div class="text-center mb-4">
-                        <h2 class="text-2xl font-bold text-blue-600 smart-suppliers-logo">SMART SUPPLIERS</h2>
+                        <h2 class="text-2xl font-bold smart-suppliers-logo"><span class="smart">SMART</span> <span class="suppliers">SUPPLIERS</span></h2>
                         <p class="text-sm">Official Receipt</p>
                         <p class="text-xs">${now.toLocaleString()}</p>
                     </div>
@@ -245,7 +268,12 @@
                         <div class="flex justify-between"><span>VAT (16%):</span><span>Ksh ${sale.vat.toFixed(2)}</span></div>
                         <div class="flex justify-between font-bold text-lg border-t pt-1 mt-1"><span>TOTAL:</span><span>Ksh ${sale.total.toFixed(2)}</span></div>
                     </div>
-                    <p class="text-center text-xs mt-4">Thank you for your business!</p>
+                    <p class="text-center text-xs mt-4">You were served by: <strong>${sale.cashierName}</strong></p>
+                    <p class="text-center text-xs mt-2">Thank you for your business!</p>
+                    <div class="border-t mt-4 pt-2 text-center text-xs text-slate-600">
+                        <p class="flex items-center justify-center"><i class="fas fa-phone-alt mr-2"></i> 0707 700 970 / 0707 700</p>
+                        <p class="flex items-center justify-center"><i class="fas fa-envelope mr-2"></i> smartsupplier72@gmail.com</p>
+                    </div>
                 `;
                 receiptModal.classList.remove('hidden');
             }
@@ -253,10 +281,29 @@
             const scannerModal = document.getElementById('scanner-modal');
             const scanBarcodeBtn = document.getElementById('scan-barcode-btn');
             const closeScannerBtn = document.getElementById('close-scanner-btn');
-            const html5QrCode = new Html5Qrcode("barcode-scanner-view");
-            scanBarcodeBtn.addEventListener('click', () => { scannerModal.classList.remove('hidden'); html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess, ()=>{}); });
-            function onScanSuccess(decodedText, decodedResult) { html5QrCode.stop().then(() => { scannerModal.classList.add('hidden'); findProductByBarcode(decodedText); }).catch(err => console.error("Error stopping scanner", err)); }
-            closeScannerBtn.addEventListener('click', () => { html5QrCode.stop().then(() => scannerModal.classList.add('hidden')).catch(err => scannerModal.classList.add('hidden')); });
+            let html5QrCode;
+            scanBarcodeBtn.addEventListener('click', () => { 
+                scannerModal.classList.remove('hidden'); 
+                if (!html5QrCode) {
+                    html5QrCode = new Html5Qrcode("barcode-scanner-view");
+                }
+                html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess, ()=>{}); 
+            });
+            function onScanSuccess(decodedText, decodedResult) { 
+                if(html5QrCode && html5QrCode.isScanning) {
+                    html5QrCode.stop().then(() => { 
+                        scannerModal.classList.add('hidden'); 
+                        findProductByBarcode(decodedText); 
+                    }).catch(err => console.error("Error stopping scanner", err)); 
+                }
+            }
+            closeScannerBtn.addEventListener('click', () => { 
+                 if(html5QrCode && html5QrCode.isScanning) {
+                    html5QrCode.stop().then(() => scannerModal.classList.add('hidden')).catch(err => scannerModal.classList.add('hidden')); 
+                 } else {
+                    scannerModal.classList.add('hidden');
+                 }
+            });
             async function findProductByBarcode(barcode) { const q = query(collection(db, "products"), where("barcode", "==", barcode)); const querySnapshot = await getDocs(q); if (querySnapshot.empty) { alert(`Product with barcode "${barcode}" not found.`); } else { const productDoc = querySnapshot.docs[0]; const product = { id: productDoc.id, ...productDoc.data() }; addProductToCart(product); } }
         });
     </script>

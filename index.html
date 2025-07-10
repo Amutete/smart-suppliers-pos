@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Suppliers POS</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb"> <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .smart-suppliers-logo { font-weight: 900; letter-spacing: -0.05em; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body class="bg-slate-100">
+
+    <div id="auth-container" class="min-h-screen bg-slate-200 flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+            <h1 class="text-5xl font-black text-blue-600 smart-suppliers-logo text-center">SMART SUPPLIERS</h1>
+            <p class="text-center text-slate-500 mt-2 mb-6">Point of Sale System</p>
+            
+            <div id="login-error-message" class="mb-4 text-center text-red-500 font-medium h-5"></div>
+
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-bold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" id="login-email" required class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-bold text-slate-700 mb-1">Password</label>
+                    <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg text-lg">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Secure Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="hidden">
+        <header class="bg-slate-800 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold">Admin Dashboard</h1>
+            <button id="admin-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button>
+        </header>
+        <div class="p-8">
+            <h2 class="text-3xl font-bold text-slate-800">Welcome, Admin!</h2>
+            <p class="text-slate-600 mt-2">This is where your main dashboard with analytics, product management, and employee controls will be.</p>
+        </div>
+    </div>
+
+    <div id="servant-dashboard" class="hidden">
+         <header class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold">POS Terminal</h1>
+            <button id="servant-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button>
+        </header>
+        <div class="p-8">
+            <h2 class="text-3xl font-bold text-slate-800">Welcome, Cashier!</h2>
+            <p class="text-slate-600 mt-2">This is where the main point of sale interface for processing transactions will be.</p>
+        </div>
+    </div>
+
+    <div id="client-dashboard" class="hidden">
+         <header class="bg-orange-500 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold">Client Portal</h1>
+            <button id="client-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button>
+        </header>
+        <div class="p-8">
+            <h2 class="text-3xl font-bold text-slate-800">Welcome, Valued Client!</h2>
+            <p class="text-slate-600 mt-2">This is where your purchase history and invoices will be available.</p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvai9ngziMFmrZiHclzTu1R5wVr0-xf9U",
+            authDomain: "smart-suppliers.firebaseapp.com",
+            projectId: "smart-suppliers",
+            storageBucket: "smart-suppliers.appspot.com",
+            messagingSenderId: "695784334948",
+            appId: "1:695784334948:web:dda5b9b89c686a42476171",
+            measurementId: "G-Q1BFZM7W93"
+        };
+        
+        // Initialize Firebase
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (e) {
+            console.error("Firebase initialization failed:", e);
+            alert("Could not connect to the application server. Please check the Firebase configuration.");
+        }
+
+        // DOM Elements
+        const authContainer = document.getElementById('auth-container');
+        const loginForm = document.getElementById('login-form');
+        const loginErrorMessage = document.getElementById('login-error-message');
+        const dashboards = {
+            admin: document.getElementById('admin-dashboard'),
+            servant: document.getElementById('servant-dashboard'),
+            client: document.getElementById('client-dashboard')
+        };
+        
+        // Main Auth Logic
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is logged in, find their role
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    const role = userData.role; // 'admin', 'servant', or 'client'
+                    
+                    // Hide login and show the correct dashboard
+                    authContainer.style.display = 'none';
+                    Object.values(dashboards).forEach(d => d.classList.add('hidden'));
+                    
+                    if (dashboards[role]) {
+                        dashboards[role].classList.remove('hidden');
+                    } else {
+                        // Default case if role is not found
+                        loginErrorMessage.textContent = "Your user role is not configured.";
+                        await signOut(auth);
+                    }
+                } else {
+                    // This case is for users who exist in Authentication but not in Firestore database
+                    loginErrorMessage.textContent = "User profile not found. Please contact admin.";
+                    await signOut(auth);
+                }
+            } else {
+                // User is logged out, show the login screen
+                authContainer.style.display = 'flex';
+                Object.values(dashboards).forEach(d => d.classList.add('hidden'));
+            }
+        });
+
+        // Login Form Handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = loginForm['login-email'].value;
+            const password = loginForm['login-password'].value;
+            loginErrorMessage.textContent = '';
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // onAuthStateChanged will handle the rest
+            } catch (error) {
+                loginErrorMessage.textContent = "Login failed. Please check your email and password.";
+                console.error("Login error:", error.message);
+            }
+        });
+
+        // Logout Button Handlers for each dashboard
+        Object.keys(dashboards).forEach(role => {
+            const logoutBtn = document.getElementById(`${role}-logout-btn`);
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    signOut(auth);
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>

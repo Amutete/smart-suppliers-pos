@@ -22,6 +22,13 @@
         .content-section.active { display: block; }
         .stat-card { background-color: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
         #barcode-scanner-view { border: 2px solid #f97316; border-radius: 0.5rem; }
+        
+        /* Print Styles for Receipt */
+        @media print {
+            body * { visibility: hidden; }
+            #receipt-container, #receipt-container * { visibility: visible; }
+            #receipt-container { position: absolute; left: 0; top: 0; width: 100%; }
+        }
     </style>
 </head>
 <body class="bg-slate-100">
@@ -60,7 +67,7 @@
                 <div id="products-section" class="content-section"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-slate-800">Product Management</h2><button id="add-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg"><i class="fas fa-plus mr-2"></i>Add New Product</button></div><div class="bg-white p-4 rounded-lg shadow"><div id="product-list-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
                 <div id="inventory-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Inventory Levels</h2><div id="inventory-list-container"></div></div></div>
                 <div id="reports-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">All Sales Transactions</h2><div id="sales-report-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
-                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
+                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
             </main>
         </div>
     </div>
@@ -69,6 +76,7 @@
     
     <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (Ksh)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
     <div id="scanner-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4">Scan Barcode</h3><div id="barcode-scanner-view" class="w-full"></div><button id="close-scanner-btn" class="mt-4 w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600">Cancel</button></div></div>
+    <div id="receipt-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-slate-800"><div id="receipt-container"></div><div class="mt-6 flex space-x-2"><button id="close-receipt-btn" class="flex-1 bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button><button id="print-receipt-btn" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Print Receipt</button></div></div></div>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -86,7 +94,7 @@
             const loginForm = document.getElementById('login-form');
             const loginErrorMessage = document.getElementById('login-error-message');
             const dashboards = { admin: document.getElementById('admin-dashboard'), servant: document.getElementById('servant-dashboard') };
-            let allProducts = []; // Cache all products for profit calculation and search
+            let allProducts = [];
             
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
@@ -100,8 +108,7 @@
                             if (dashboards[role]) { 
                                 dashboards[role].classList.remove('hidden'); 
                                 if (role === 'admin') { listenForAdminData(); }
-                            } 
-                            else { loginErrorMessage.textContent = `Your user role is not supported.`; await signOut(auth); }
+                            } else { loginErrorMessage.textContent = `Your user role is not supported.`; await signOut(auth); }
                         } else { loginErrorMessage.textContent = "Profile not found in database."; await signOut(auth); }
                     } catch(e) { loginErrorMessage.textContent = `Error: ${e.code}. Check Rules.`; console.error(e); await signOut(auth); }
                 } else {
@@ -118,7 +125,6 @@
             const adminContentSections = document.querySelectorAll('.content-section');
             adminSidebarLinks.forEach(link => { link.addEventListener('click', (e) => { if (!e.currentTarget.id.includes('logout')) { e.preventDefault(); const targetId = link.dataset.target; if (!targetId) return; adminPageTitle.textContent = targetId.charAt(0).toUpperCase() + targetId.slice(1); adminSidebarLinks.forEach(l => l.classList.remove('active')); link.classList.add('active'); adminContentSections.forEach(section => section.classList.toggle('active', section.id === `${targetId}-section`)); } }); });
             
-            // --- ALL ADMIN AND SERVANT LOGIC IS HERE ---
             const statTodaySales = document.getElementById('stat-today-sales');
             const statTodayProfit = document.getElementById('stat-today-profit');
             const statLowStock = document.getElementById('stat-low-stock');
@@ -170,9 +176,9 @@
                 });
             }
 
-            function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Items</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleString()}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
+            function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleString()}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderInventoryList(inventory) { if (inventory.length === 0) { inventoryListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products in inventory.</p>'; return; } inventoryListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product</th><th class="p-3 text-right">Stock</th><th class="p-3 text-right">Cost Value</th></tr></thead><tbody class="divide-y divide-slate-200">${inventory.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right ${p.stock <= 5 ? 'text-red-500 font-bold' : ''}">${p.stock}</td><td class="p-3 text-right">Ksh ${(p.stock * p.costPrice).toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
-            function renderUserList(users) { if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; } userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role}</p></div></div>`).join('')}</div>`; }
+            function renderUserList(users) { if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; } userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role}</p></div><button data-id="${u.id}" data-name="${u.name}" class="delete-user-btn text-red-500 hover:text-red-700 text-sm font-semibold">Delete</button></div>`).join('')}</div>`; }
             function renderProductList(products) { if (products.length === 0) { productListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products found.</p>'; return; } productListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product Name</th><th class="p-3 text-right">Price</th><th class="p-3 text-right">Stock</th><th class="p-3">Actions</th></tr></thead><tbody class="divide-y divide-slate-200">${products.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right font-bold">Ksh ${p.sellingPrice.toFixed(2)}</td><td class="p-3 text-right">${p.stock}</td><td class="p-3 space-x-2"><button data-product='${JSON.stringify(p)}' class="edit-product-btn text-blue-500 hover:underline text-xs">Edit</button><button data-id="${p.id}" data-name="${p.name}" class="delete-product-btn text-red-500 hover:underline text-xs">Delete</button></td></tr>`).join('')}</tbody></table>`; }
 
             const createServantForm = document.getElementById('create-servant-form');
@@ -182,25 +188,76 @@
             const productForm = document.getElementById('product-form');
             document.getElementById('add-product-btn').addEventListener('click', () => { productForm.reset(); document.getElementById('product-id').value = ''; document.getElementById('modal-title').textContent = 'Add New Product'; document.getElementById('save-product-btn').textContent = 'Save Product'; addProductModal.classList.remove('hidden'); });
             document.getElementById('close-product-modal-btn').addEventListener('click', () => addProductModal.classList.add('hidden'));
-            
-            productForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const productId = document.getElementById('product-id').value;
-                const productData = { name: document.getElementById('product-name').value, barcode: document.getElementById('product-barcode').value, costPrice: parseFloat(document.getElementById('product-cost').value), sellingPrice: parseFloat(document.getElementById('product-price').value), stock: parseInt(document.getElementById('product-stock').value), lastUpdated: serverTimestamp() };
-                try {
-                    if (productId) { await updateDoc(doc(db, "products", productId), productData); alert("Product updated!"); } 
-                    else { productData.createdAt = serverTimestamp(); await addDoc(collection(db, "products"), productData); alert("Product added!"); }
-                    addProductModal.classList.add('hidden');
-                } catch (error) { alert("Error saving product: " + error.message); }
-            });
-
+            productForm.addEventListener('submit', async (e) => { e.preventDefault(); const productId = document.getElementById('product-id').value; const productData = { name: document.getElementById('product-name').value, barcode: document.getElementById('product-barcode').value, costPrice: parseFloat(document.getElementById('product-cost').value), sellingPrice: parseFloat(document.getElementById('product-price').value), stock: parseInt(document.getElementById('product-stock').value), lastUpdated: serverTimestamp() }; try { if (productId) { await updateDoc(doc(db, "products", productId), productData); alert("Product updated!"); } else { productData.createdAt = serverTimestamp(); await addDoc(collection(db, "products"), productData); alert("Product added!"); } addProductModal.classList.add('hidden'); } catch (error) { alert("Error saving product: " + error.message); } });
             productListContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('edit-product-btn')) { const product = JSON.parse(e.target.dataset.product); document.getElementById('modal-title').textContent = 'Edit Product'; document.getElementById('product-id').value = product.id; document.getElementById('product-name').value = product.name; document.getElementById('product-barcode').value = product.barcode; document.getElementById('product-cost').value = product.costPrice; document.getElementById('product-price').value = product.sellingPrice; document.getElementById('product-stock').value = product.stock; document.getElementById('save-product-btn').textContent = 'Update Product'; addProductModal.classList.remove('hidden'); }
                 if (e.target.classList.contains('delete-product-btn')) { const productId = e.target.dataset.id; const productName = e.target.dataset.name; if (confirm(`Delete "${productName}"?`)) { deleteDoc(doc(db, "products", productId)); } }
             });
+            userListContainer.addEventListener('click', (e) => { if (e.target.classList.contains('delete-user-btn')) { const userId = e.target.dataset.id; const userName = e.target.dataset.name; if (confirm(`Delete user "${userName}"? This will only remove their data, not their login.`)) { deleteDoc(doc(db, "users", userId)); alert("User data deleted. Please remove their login from the Firebase Authentication console manually."); } } });
 
-            // --- All Servant POS Logic is here ---
-            // It is unchanged from the previous version.
+            const productGrid = document.getElementById('product-grid');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const completeSaleBtn = document.getElementById('complete-sale-btn');
+            let currentCart = [];
+            const posProductsQuery = query(collection(db, "products"), orderBy("name"));
+            onSnapshot(posProductsQuery, (querySnapshot) => { productGrid.innerHTML = ''; if (querySnapshot.empty) { productGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center mt-10">No products in database.</p>'; return; } querySnapshot.forEach((doc) => { const product = { id: doc.id, ...doc.data() }; const productCard = document.createElement('div'); productCard.className = 'bg-white p-3 rounded-lg shadow-md cursor-pointer hover:scale-105 hover:shadow-xl transition-transform'; productCard.innerHTML = `<div class="font-bold text-slate-800 truncate">${product.name}</div><div class="text-sm text-slate-500">Stock: ${product.stock}</div><div class="text-lg font-bold text-orange-500 mt-2">Ksh ${product.sellingPrice.toFixed(2)}</div>`; productCard.addEventListener('click', () => addProductToCart(product)); productGrid.appendChild(productCard); }); });
+            function addProductToCart(product) { if (product.stock <= 0) { alert(`${product.name} is out of stock.`); return; } const existingItem = currentCart.find(item => item.id === product.id); if (existingItem) { if (existingItem.qty < product.stock) { existingItem.qty++; } else { alert(`No more stock available for ${product.name}.`); } } else { currentCart.push({ ...product, qty: 1 }); } renderCart(); }
+            function removeFromCart(productId) { const itemIndex = currentCart.findIndex(item => item.id === productId); if (itemIndex > -1) { if (currentCart[itemIndex].qty > 1) { currentCart[itemIndex].qty--; } else { currentCart.splice(itemIndex, 1); } } renderCart(); }
+            function renderCart() { if (currentCart.length === 0) { cartItemsContainer.innerHTML = '<p class="text-slate-500 text-center mt-10">Cart is empty</p>'; completeSaleBtn.disabled = true; } else { cartItemsContainer.innerHTML = ''; currentCart.forEach(item => { const cartItemEl = document.createElement('div'); cartItemEl.className = 'flex items-center justify-between bg-slate-50 p-2 rounded-md'; cartItemEl.innerHTML = `<div><div class="font-semibold text-slate-700">${item.name}</div><div class="text-sm text-slate-500">Ksh ${item.sellingPrice.toFixed(2)}</div></div><div class="flex items-center space-x-2"><button data-id="${item.id}" class="remove-from-cart-btn text-red-500 font-bold px-2">-</button><span class="font-bold w-6 text-center">${item.qty}</span><button data-id="${item.id}" class="add-to-cart-btn text-green-500 font-bold px-2">+</button></div>`; cartItemsContainer.appendChild(cartItemEl); }); completeSaleBtn.disabled = false; } updateTotals(); }
+            cartItemsContainer.addEventListener('click', (e) => { if (e.target.classList.contains('add-to-cart-btn')) { const product = allProducts.find(p => p.id === e.target.dataset.id); if(product) addProductToCart(product); } else if (e.target.classList.contains('remove-from-cart-btn')) { removeFromCart(e.target.dataset.id); } });
+            function updateTotals() { const subtotal = currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0); const vat = subtotal * 0.16; const total = subtotal + vat; document.getElementById('cart-subtotal').textContent = `Ksh ${subtotal.toFixed(2)}`; document.getElementById('cart-vat').textContent = `Ksh ${vat.toFixed(2)}`; document.getElementById('cart-total').textContent = `Ksh ${total.toFixed(2)}`; }
+            
+            const receiptModal = document.getElementById('receipt-modal');
+            const receiptContainer = document.getElementById('receipt-container');
+            document.getElementById('close-receipt-btn').addEventListener('click', () => receiptModal.classList.add('hidden'));
+            document.getElementById('print-receipt-btn').addEventListener('click', () => window.print());
+
+            completeSaleBtn.addEventListener('click', async () => {
+                if (currentCart.length === 0) return; if (!confirm("Proceed to complete this sale?")) return;
+                const saleData = { items: currentCart.map(item => ({ id: item.id, name: item.name, qty: item.qty, price: item.sellingPrice })), subtotal: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0), vat: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 0.16, total: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 1.16, cashierId: auth.currentUser.uid, createdAt: serverTimestamp() };
+                try {
+                    const batch = writeBatch(db); const salesRef = doc(collection(db, "sales")); batch.set(salesRef, saleData);
+                    currentCart.forEach(item => { const productRef = doc(db, "products", item.id); batch.update(productRef, { stock: increment(-item.qty) }); });
+                    await batch.commit();
+                    showReceipt(saleData);
+                    currentCart = []; renderCart();
+                } catch (error) { console.error("Error completing sale: ", error); alert("Sale failed. Please try again."); }
+            });
+
+            function showReceipt(sale) {
+                const now = new Date();
+                receiptContainer.innerHTML = `
+                    <div class="text-center mb-4">
+                        <h2 class="text-2xl font-bold text-blue-600 smart-suppliers-logo">SMART SUPPLIERS</h2>
+                        <p class="text-sm">Official Receipt</p>
+                        <p class="text-xs">${now.toLocaleString()}</p>
+                    </div>
+                    <div class="border-t border-b border-dashed py-2 space-y-1">
+                        ${sale.items.map(item => `
+                            <div class="flex justify-between text-sm">
+                                <span>${item.name} (x${item.qty})</span>
+                                <span>Ksh ${(item.price * item.qty).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-4 space-y-1 text-sm">
+                        <div class="flex justify-between"><span>Subtotal:</span><span>Ksh ${sale.subtotal.toFixed(2)}</span></div>
+                        <div class="flex justify-between"><span>VAT (16%):</span><span>Ksh ${sale.vat.toFixed(2)}</span></div>
+                        <div class="flex justify-between font-bold text-lg border-t pt-1 mt-1"><span>TOTAL:</span><span>Ksh ${sale.total.toFixed(2)}</span></div>
+                    </div>
+                    <p class="text-center text-xs mt-4">Thank you for your business!</p>
+                `;
+                receiptModal.classList.remove('hidden');
+            }
+
+            const scannerModal = document.getElementById('scanner-modal');
+            const scanBarcodeBtn = document.getElementById('scan-barcode-btn');
+            const closeScannerBtn = document.getElementById('close-scanner-btn');
+            const html5QrCode = new Html5Qrcode("barcode-scanner-view");
+            scanBarcodeBtn.addEventListener('click', () => { scannerModal.classList.remove('hidden'); html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess, ()=>{}); });
+            function onScanSuccess(decodedText, decodedResult) { html5QrCode.stop().then(() => { scannerModal.classList.add('hidden'); findProductByBarcode(decodedText); }).catch(err => console.error("Error stopping scanner", err)); }
+            closeScannerBtn.addEventListener('click', () => { html5QrCode.stop().then(() => scannerModal.classList.add('hidden')).catch(err => scannerModal.classList.add('hidden')); });
+            async function findProductByBarcode(barcode) { const q = query(collection(db, "products"), where("barcode", "==", barcode)); const querySnapshot = await getDocs(q); if (querySnapshot.empty) { alert(`Product with barcode "${barcode}" not found.`); } else { const productDoc = querySnapshot.docs[0]; const product = { id: productDoc.id, ...productDoc.data() }; addProductToCart(product); } }
         });
     </script>
 </body>

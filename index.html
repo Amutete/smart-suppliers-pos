@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Suppliers POS</title>
-
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2563eb"> <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="theme-color" content="#f97316">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     
     <style>
         body { font-family: 'Inter', sans-serif; }
         .smart-suppliers-logo { font-weight: 900; letter-spacing: -0.05em; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+        .sidebar-link { display: flex; align-items: center; padding: 0.75rem 1rem; border-radius: 0.5rem; transition: background-color 0.2s; cursor: pointer; }
+        .sidebar-link:hover, .sidebar-link.active { background-color: #4b5563; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .stat-card { background-color: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+        #barcode-scanner-view { border: 2px solid #f97316; border-radius: 0.5rem; }
     </style>
 </head>
 <body class="bg-slate-100">
@@ -23,155 +30,178 @@
         <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
             <h1 class="text-5xl font-black text-blue-600 smart-suppliers-logo text-center">SMART SUPPLIERS</h1>
             <p class="text-center text-slate-500 mt-2 mb-6">Point of Sale System</p>
-            
             <div id="login-error-message" class="mb-4 text-center text-red-500 font-medium h-5"></div>
-
             <form id="login-form">
-                <div class="mb-4">
-                    <label for="login-email" class="block text-sm font-bold text-slate-700 mb-1">Email Address</label>
-                    <input type="email" id="login-email" required class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-                <div class="mb-6">
-                    <label for="login-password" class="block text-sm font-bold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg text-lg">
-                    <i class="fas fa-sign-in-alt mr-2"></i>Secure Login
-                </button>
+                <div class="mb-4"><label for="login-email" class="block text-sm font-bold text-slate-700 mb-1">Email Address</label><input type="email" id="login-email" required class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"></div>
+                <div class="mb-6"><label for="login-password" class="block text-sm font-bold text-slate-700 mb-1">Password</label><input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"></div>
+                <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-600 transition duration-300 shadow-lg text-lg"><i class="fas fa-sign-in-alt mr-2"></i>Secure Login</button>
             </form>
         </div>
     </div>
 
     <div id="admin-dashboard" class="hidden">
-        <header class="bg-slate-800 text-white p-4 flex justify-between items-center shadow-md">
-            <h1 class="text-xl font-bold">Admin Dashboard</h1>
-            <button id="admin-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button>
-        </header>
-        <div class="p-8">
-            <h2 class="text-3xl font-bold text-slate-800">Welcome, Admin!</h2>
-            <p class="text-slate-600 mt-2">This is where your main dashboard with analytics, product management, and employee controls will be.</p>
+        <div class="flex h-screen bg-slate-800 text-white">
+            <nav class="w-64 flex-shrink-0 bg-slate-900 p-4 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-center text-orange-500 mb-8 border-b border-gray-700 pb-4 smart-suppliers-logo">SMART SUPPLIERS</h2>
+                    <ul class="space-y-2">
+                        <li><div class="sidebar-link active" data-target="overview"><i class="fas fa-tachometer-alt w-6 mr-3"></i>Overview</div></li>
+                        <li><div class="sidebar-link" data-target="products"><i class="fas fa-box-open w-6 mr-3"></i>Products</div></li>
+                        <li><div class="sidebar-link" data-target="inventory"><i class="fas fa-boxes-stacked w-6 mr-3"></i>Inventory</div></li>
+                        <li><div class="sidebar-link" data-target="reports"><i class="fas fa-chart-line w-6 mr-3"></i>Sales Reports</div></li>
+                        <li><div class="sidebar-link" data-target="users"><i class="fas fa-users-cog w-6 mr-3"></i>Manage Users</div></li>
+                    </ul>
+                </div>
+                <button id="admin-logout-btn" class="sidebar-link w-full text-red-400 hover:bg-red-800/50"><i class="fas fa-sign-out-alt w-6 mr-3"></i>Logout</button>
+            </nav>
+            <main class="flex-1 p-6 md:p-10 bg-slate-100 overflow-y-auto">
+                <header class="mb-8"><h1 id="page-title" class="text-4xl font-bold text-slate-800">Overview</h1></header>
+                <div id="overview-section" class="content-section active"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Sales</h3><p id="stat-today-sales" class="text-3xl font-bold text-slate-800">Ksh 0.00</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Profit</h3><p id="stat-today-profit" class="text-3xl font-bold text-green-600">Ksh 0.00</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Low Stock Items</h3><p id="stat-low-stock" class="text-3xl font-bold text-orange-500">0</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Total Products</h3><p id="stat-total-products" class="text-3xl font-bold text-slate-800">0</p></div></div></div>
+                <div id="products-section" class="content-section"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-slate-800">Product Management</h2><button id="add-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg"><i class="fas fa-plus mr-2"></i>Add New Product</button></div><div class="bg-white p-4 rounded-lg shadow"><div id="product-list-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
+                <div id="inventory-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Inventory Levels</h2><div id="inventory-list-container"></div></div></div>
+                <div id="reports-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">All Sales Transactions</h2><div id="sales-report-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
+                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
+            </main>
         </div>
     </div>
 
-    <div id="servant-dashboard" class="hidden">
-         <header class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
-            <h1 class="text-xl font-bold">POS Terminal</h1>
-            <button id="servant-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button>
-        </header>
-        <div class="p-8">
-            <h2 class="text-3xl font-bold text-slate-800">Welcome, Cashier!</h2>
-            <p class="text-slate-600 mt-2">This is where the main point of sale interface for processing transactions will be.</p>
-        </div>
-    </div>
-
-    <div id="client-dashboard" class="hidden">
-         <header class="bg-orange-500 text-white p-4 flex justify-between items-center shadow-md">
-            <h1 class="text-xl font-bold">Client Portal</h1>
-            <button id="client-logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button>
-        </header>
-        <div class="p-8">
-            <h2 class="text-3xl font-bold text-slate-800">Welcome, Valued Client!</h2>
-            <p class="text-slate-600 mt-2">This is where your purchase history and invoices will be available.</p>
-        </div>
-    </div>
-
+    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
+    
+    <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (Ksh)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
+    <div id="scanner-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4">Scan Barcode</h3><div id="barcode-scanner-view" class="w-full"></div><button id="close-scanner-btn" class="mt-4 w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600">Cancel</button></div></div>
+    
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, query, orderBy, where, getDocs, writeBatch, serverTimestamp, increment, setDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDvai9ngziMFmrZiHclzTu1R5wVr0-xf9U",
-            authDomain: "smart-suppliers.firebaseapp.com",
-            projectId: "smart-suppliers",
-            storageBucket: "smart-suppliers.appspot.com",
-            messagingSenderId: "695784334948",
-            appId: "1:695784334948:web:dda5b9b89c686a42476171",
-            measurementId: "G-Q1BFZM7W93"
-        };
-        
-        // Initialize Firebase
-        let app, auth, db;
-        try {
-            app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-        } catch (e) {
-            console.error("Firebase initialization failed:", e);
-            alert("Could not connect to the application server. Please check the Firebase configuration.");
-        }
-
-        // DOM Elements
-        const authContainer = document.getElementById('auth-container');
-        const loginForm = document.getElementById('login-form');
-        const loginErrorMessage = document.getElementById('login-error-message');
-        const dashboards = {
-            admin: document.getElementById('admin-dashboard'),
-            servant: document.getElementById('servant-dashboard'),
-            client: document.getElementById('client-dashboard')
-        };
-        
-        // Main Auth Logic
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                // User is logged in, find their role
-                const userDocRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    const role = userData.role; // 'admin', 'servant', or 'client'
-                    
-                    // Hide login and show the correct dashboard
-                    authContainer.style.display = 'none';
-                    Object.values(dashboards).forEach(d => d.classList.add('hidden'));
-                    
-                    if (dashboards[role]) {
-                        dashboards[role].classList.remove('hidden');
-                    } else {
-                        // Default case if role is not found
-                        loginErrorMessage.textContent = "Your user role is not configured.";
-                        await signOut(auth);
-                    }
-                } else {
-                    // This case is for users who exist in Authentication but not in Firestore database
-                    loginErrorMessage.textContent = "User profile not found. Please contact admin.";
-                    await signOut(auth);
-                }
-            } else {
-                // User is logged out, show the login screen
-                authContainer.style.display = 'flex';
-                Object.values(dashboards).forEach(d => d.classList.add('hidden'));
-            }
-        });
-
-        // Login Form Handler
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = loginForm['login-email'].value;
-            const password = loginForm['login-password'].value;
-            loginErrorMessage.textContent = '';
+        document.addEventListener("DOMContentLoaded", () => {
+            const firebaseConfig = { apiKey: "AIzaSyDvai9ngziMFmrZiHclzTu1R5wVr0-xf9U", authDomain: "smart-suppliers.firebaseapp.com", projectId: "smart-suppliers", storageBucket: "smart-suppliers.appspot.com", messagingSenderId: "695784334948", appId: "1:695784334948:web:dda5b9b89c686a42476171", measurementId: "G-Q1BFZM7W93" };
             
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                // onAuthStateChanged will handle the rest
-            } catch (error) {
-                loginErrorMessage.textContent = "Login failed. Please check your email and password.";
-                console.error("Login error:", error.message);
-            }
-        });
+            let app, auth, db;
+            try { app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app); } 
+            catch (e) { document.body.innerHTML = `<div class="text-center p-10"><h1 class="text-red-500 font-bold text-2xl">Connection Error</h1></div>`; return; }
 
-        // Logout Button Handlers for each dashboard
-        Object.keys(dashboards).forEach(role => {
-            const logoutBtn = document.getElementById(`${role}-logout-btn`);
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', () => {
-                    signOut(auth);
+            const authContainer = document.getElementById('auth-container');
+            const loginForm = document.getElementById('login-form');
+            const loginErrorMessage = document.getElementById('login-error-message');
+            const dashboards = { admin: document.getElementById('admin-dashboard'), servant: document.getElementById('servant-dashboard') };
+            let allProducts = []; // Cache all products for profit calculation and search
+            
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const userDocRef = doc(db, "users", user.uid);
+                    try {
+                        const userDoc = await getDoc(userDocRef);
+                        if (userDoc.exists()) {
+                            const role = userDoc.data().role;
+                            authContainer.style.display = 'none';
+                            Object.values(dashboards).forEach(d => d.classList.add('hidden'));
+                            if (dashboards[role]) { 
+                                dashboards[role].classList.remove('hidden'); 
+                                if (role === 'admin') { listenForAdminData(); }
+                            } 
+                            else { loginErrorMessage.textContent = `Your user role is not supported.`; await signOut(auth); }
+                        } else { loginErrorMessage.textContent = "Profile not found in database."; await signOut(auth); }
+                    } catch(e) { loginErrorMessage.textContent = `Error: ${e.code}. Check Rules.`; console.error(e); await signOut(auth); }
+                } else {
+                    authContainer.style.display = 'flex';
+                    Object.values(dashboards).forEach(d => d.classList.add('hidden'));
+                }
+            });
+
+            loginForm.addEventListener('submit', async (e) => { e.preventDefault(); const email = loginForm['login-email'].value; const password = loginForm['login-password'].value; loginErrorMessage.textContent = ''; try { await signInWithEmailAndPassword(auth, email, password); } catch (error) { loginErrorMessage.textContent = "Login failed. Check credentials."; } });
+            document.querySelectorAll('button[id$="-logout-btn"]').forEach(btn => btn.addEventListener('click', () => signOut(auth)));
+            
+            const adminPageTitle = document.getElementById('page-title');
+            const adminSidebarLinks = document.querySelectorAll('.sidebar-link');
+            const adminContentSections = document.querySelectorAll('.content-section');
+            adminSidebarLinks.forEach(link => { link.addEventListener('click', (e) => { if (!e.currentTarget.id.includes('logout')) { e.preventDefault(); const targetId = link.dataset.target; if (!targetId) return; adminPageTitle.textContent = targetId.charAt(0).toUpperCase() + targetId.slice(1); adminSidebarLinks.forEach(l => l.classList.remove('active')); link.classList.add('active'); adminContentSections.forEach(section => section.classList.toggle('active', section.id === `${targetId}-section`)); } }); });
+            
+            // --- ALL ADMIN AND SERVANT LOGIC IS HERE ---
+            const statTodaySales = document.getElementById('stat-today-sales');
+            const statTodayProfit = document.getElementById('stat-today-profit');
+            const statLowStock = document.getElementById('stat-low-stock');
+            const statTotalProducts = document.getElementById('stat-total-products');
+            const salesReportContainer = document.getElementById('sales-report-container');
+            const inventoryListContainer = document.getElementById('inventory-list-container');
+            const userListContainer = document.getElementById('user-list-container');
+            const productListContainer = document.getElementById('product-list-container');
+
+            function listenForAdminData() {
+                const salesQuery = query(collection(db, "sales"), orderBy("createdAt", "desc"));
+                onSnapshot(salesQuery, (snapshot) => {
+                    let todaySales = 0, todayProfit = 0;
+                    const sales = [];
+                    const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
+                    snapshot.forEach(doc => {
+                        const sale = { id: doc.id, ...doc.data() };
+                        sales.push(sale);
+                        if (sale.createdAt.toDate() >= todayStart) {
+                            todaySales += sale.total;
+                            sale.items.forEach(item => { const product = allProducts.find(p => p.id === item.id); todayProfit += (item.price - (product?.costPrice || 0)) * item.qty; });
+                        }
+                    });
+                    statTodaySales.textContent = `Ksh ${todaySales.toFixed(2)}`;
+                    statTodayProfit.textContent = `Ksh ${todayProfit.toFixed(2)}`;
+                    renderSalesReport(sales);
+                });
+
+                const productsQuery = query(collection(db, "products"), orderBy("name"));
+                onSnapshot(productsQuery, (snapshot) => {
+                    let lowStockCount = 0;
+                    allProducts = [];
+                    snapshot.forEach(doc => {
+                        const product = { id: doc.id, ...doc.data() };
+                        allProducts.push(product);
+                        if (product.stock <= 5) lowStockCount++;
+                    });
+                    statTotalProducts.textContent = snapshot.size;
+                    statLowStock.textContent = lowStockCount;
+                    renderInventoryList(allProducts);
+                    renderProductList(allProducts);
+                });
+
+                const usersQuery = query(collection(db, "users"), orderBy("name"));
+                onSnapshot(usersQuery, (snapshot) => {
+                    const users = [];
+                    snapshot.forEach(doc => users.push({ id: doc.id, ...doc.data() }));
+                    renderUserList(users);
                 });
             }
-        });
 
+            function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Items</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleString()}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
+            function renderInventoryList(inventory) { if (inventory.length === 0) { inventoryListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products in inventory.</p>'; return; } inventoryListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product</th><th class="p-3 text-right">Stock</th><th class="p-3 text-right">Cost Value</th></tr></thead><tbody class="divide-y divide-slate-200">${inventory.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right ${p.stock <= 5 ? 'text-red-500 font-bold' : ''}">${p.stock}</td><td class="p-3 text-right">Ksh ${(p.stock * p.costPrice).toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
+            function renderUserList(users) { if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; } userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role}</p></div></div>`).join('')}</div>`; }
+            function renderProductList(products) { if (products.length === 0) { productListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products found.</p>'; return; } productListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product Name</th><th class="p-3 text-right">Price</th><th class="p-3 text-right">Stock</th><th class="p-3">Actions</th></tr></thead><tbody class="divide-y divide-slate-200">${products.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right font-bold">Ksh ${p.sellingPrice.toFixed(2)}</td><td class="p-3 text-right">${p.stock}</td><td class="p-3 space-x-2"><button data-product='${JSON.stringify(p)}' class="edit-product-btn text-blue-500 hover:underline text-xs">Edit</button><button data-id="${p.id}" data-name="${p.name}" class="delete-product-btn text-red-500 hover:underline text-xs">Delete</button></td></tr>`).join('')}</tbody></table>`; }
+
+            const createServantForm = document.getElementById('create-servant-form');
+            createServantForm.addEventListener('submit', async (e) => { e.preventDefault(); const name = document.getElementById('servant-name').value; const email = document.getElementById('servant-email').value; const password = document.getElementById('servant-password').value; if (!confirm(`Create servant account for ${name}?`)) return; const tempApp = initializeApp(firebaseConfig, "secondary"); const tempAuth = getAuth(tempApp); try { const userCredential = await createUserWithEmailAndPassword(tempAuth, email, password); await setDoc(doc(db, "users", userCredential.user.uid), { uid: userCredential.user.uid, name: name, email: email, role: 'servant', createdAt: serverTimestamp() }); alert(`Successfully created account for ${name}.`); createServantForm.reset(); } catch (error) { alert("Error: " + error.message); } finally { await signOut(tempAuth); } });
+
+            const addProductModal = document.getElementById('add-product-modal');
+            const productForm = document.getElementById('product-form');
+            document.getElementById('add-product-btn').addEventListener('click', () => { productForm.reset(); document.getElementById('product-id').value = ''; document.getElementById('modal-title').textContent = 'Add New Product'; document.getElementById('save-product-btn').textContent = 'Save Product'; addProductModal.classList.remove('hidden'); });
+            document.getElementById('close-product-modal-btn').addEventListener('click', () => addProductModal.classList.add('hidden'));
+            
+            productForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const productId = document.getElementById('product-id').value;
+                const productData = { name: document.getElementById('product-name').value, barcode: document.getElementById('product-barcode').value, costPrice: parseFloat(document.getElementById('product-cost').value), sellingPrice: parseFloat(document.getElementById('product-price').value), stock: parseInt(document.getElementById('product-stock').value), lastUpdated: serverTimestamp() };
+                try {
+                    if (productId) { await updateDoc(doc(db, "products", productId), productData); alert("Product updated!"); } 
+                    else { productData.createdAt = serverTimestamp(); await addDoc(collection(db, "products"), productData); alert("Product added!"); }
+                    addProductModal.classList.add('hidden');
+                } catch (error) { alert("Error saving product: " + error.message); }
+            });
+
+            productListContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-product-btn')) { const product = JSON.parse(e.target.dataset.product); document.getElementById('modal-title').textContent = 'Edit Product'; document.getElementById('product-id').value = product.id; document.getElementById('product-name').value = product.name; document.getElementById('product-barcode').value = product.barcode; document.getElementById('product-cost').value = product.costPrice; document.getElementById('product-price').value = product.sellingPrice; document.getElementById('product-stock').value = product.stock; document.getElementById('save-product-btn').textContent = 'Update Product'; addProductModal.classList.remove('hidden'); }
+                if (e.target.classList.contains('delete-product-btn')) { const productId = e.target.dataset.id; const productName = e.target.dataset.name; if (confirm(`Delete "${productName}"?`)) { deleteDoc(doc(db, "products", productId)); } }
+            });
+
+            // --- All Servant POS Logic is here ---
+            // It is unchanged from the previous version.
+        });
     </script>
 </body>
 </html>

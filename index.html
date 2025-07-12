@@ -26,7 +26,6 @@
         .stat-card { background-color: white; border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); transition: background-color 0.2s; }
         #barcode-scanner-view { border: 2px solid #f97316; border-radius: 0.5rem; }
         
-        /* Print Styles for Receipt */
         @media print {
             body * { visibility: hidden; }
             #receipt-container, #receipt-container * { visibility: visible; }
@@ -75,8 +74,9 @@
         </div>
     </div>
 
-    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
+    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="install-app-btn" class="hidden ml-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition"><i class="fas fa-download mr-2"></i>Install App</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
     
+    <!-- Modals -->
     <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (Ksh)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
     <div id="scanner-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4">Scan Barcode</h3><div id="barcode-scanner-view" class="w-full"></div><button id="close-scanner-btn" class="mt-4 w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600">Cancel</button></div></div>
     <div id="receipt-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-slate-800"><div id="receipt-container" class="bg-white p-2"></div><div class="mt-6 flex space-x-2"><button id="close-receipt-btn" class="flex-1 bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button><button id="download-receipt-btn" class="flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700"><i class="fas fa-download mr-2"></i>Download</button><button id="print-receipt-btn" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700"><i class="fas fa-print mr-2"></i>Print</button></div></div></div>
@@ -96,15 +96,11 @@
                 auth = getAuth(app); 
                 db = getFirestore(app);
                 await enableIndexedDbPersistence(db);
-                console.log("Offline persistence enabled.");
             } catch (err) { 
                 if (err.code == 'failed-precondition') {
-                    console.warn("Multiple tabs open, persistence can only be enabled in one. Not a critical error.");
+                    console.warn("Offline persistence can only be enabled in one tab at a time.");
                 } else if (err.code == 'unimplemented') {
-                    console.warn("The current browser does not support all of the features required to enable persistence.");
-                } else {
-                    document.body.innerHTML = `<div class="text-center p-10"><h1 class="text-red-500 font-bold text-2xl">Connection Error</h1><p>${err.message}</p></div>`; 
-                    return;
+                    console.warn("Browser does not support all features for offline persistence.");
                 }
             }
 
@@ -117,11 +113,7 @@
             
             const offlineIndicator = document.getElementById('offline-indicator');
             const updateOnlineStatus = () => {
-                if (navigator.onLine) {
-                    offlineIndicator.classList.add('hidden');
-                } else {
-                    offlineIndicator.classList.remove('hidden');
-                }
+                offlineIndicator.classList.toggle('hidden', navigator.onLine);
             };
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
@@ -245,18 +237,7 @@
                     lowStockListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No items are currently low on stock.</p>';
                     return;
                 }
-                lowStockListContainer.innerHTML = `
-                    <div class="space-y-2">
-                        ${lowStockItems.map(p => `
-                            <div class="flex justify-between items-center bg-slate-50 p-3 rounded-md">
-                                <p class="font-semibold">${p.name}</p>
-                                <p class="text-sm font-bold ${p.stock === 0 ? 'text-red-600' : 'text-orange-600'}">
-                                    Stock: ${p.stock}
-                                </p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                lowStockListContainer.innerHTML = `<div class="space-y-2">${lowStockItems.map(p => `<div class="flex justify-between items-center bg-slate-50 p-3 rounded-md"><p class="font-semibold">${p.name}</p><p class="text-sm font-bold ${p.stock === 0 ? 'text-red-600' : 'text-orange-600'}">Stock: ${p.stock}</p></div>`).join('')}</div>`;
             }
 
             function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Time</th><th class="p-3">Cashier</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleDateString()}</td><td class="p-3">${s.createdAt.toDate().toLocaleTimeString()}</td><td class="p-3">${s.cashierName || 'N/A'}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
@@ -339,7 +320,7 @@
                     <p class="text-center text-xs mt-4">You were served by: <strong>${sale.cashierName}</strong></p>
                     <p class="text-center text-xs mt-2">Thank you for your business!</p>
                     <div class="border-t mt-4 pt-2 text-center text-xs text-slate-600">
-                        <p class="flex items-center justify-center"><i class="fas fa-phone-alt mr-2"></i> 0707 700 950 / 0707 700 999</p>
+                        <p class="flex items-center justify-center"><i class="fas fa-phone-alt mr-2"></i> 0707 700 970 / 0707 700</p>
                         <p class="flex items-center justify-center"><i class="fas fa-envelope mr-2"></i> smartsupplier72@gmail.com</p>
                     </div>
                 `;
@@ -375,17 +356,43 @@
             async function findProductByBarcode(barcode) { const q = query(collection(db, "products"), where("barcode", "==", barcode)); const querySnapshot = await getDocs(q); if (querySnapshot.empty) { alert(`Product with barcode "${barcode}" not found.`); } else { const productDoc = querySnapshot.docs[0]; const product = { id: productDoc.id, ...productDoc.data() }; addProductToCart(product); } }
         });
     </script>
-
+    
     <script>
         if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').then(registration => {
-              console.log('✅ ServiceWorker registration successful with scope: ', registration.scope);
-            }, err => {
-              console.log('❌ ServiceWorker registration failed: ', err);
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
             });
-          });
         }
+
+        let deferredPrompt;
+        const installAppBtn = document.getElementById('install-app-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installAppBtn.classList.remove('hidden');
+        });
+
+        installAppBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                installAppBtn.classList.add('hidden');
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            installAppBtn.classList.add('hidden');
+            console.log('Smart Suppliers POS was installed.');
+        });
     </script>
+
 </body>
 </html>

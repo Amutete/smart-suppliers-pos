@@ -64,17 +64,39 @@
                 <button id="admin-logout-btn" class="sidebar-link w-full text-red-400 hover:bg-red-800/50"><i class="fas fa-sign-out-alt w-6 mr-3"></i>Logout</button>
             </nav>
             <main class="flex-1 p-6 md:p-10 bg-slate-100 overflow-y-auto">
-                <header class="mb-8"><h1 id="page-title" class="text-4xl font-bold text-slate-800">Overview</h1></header>
+                <header class="mb-8 flex justify-between items-center">
+                    <h1 id="page-title" class="text-4xl font-bold text-slate-800">Overview</h1>
+                    <button id="admin-install-app-btn" class="hidden ml-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition"><i class="fas fa-download mr-2"></i>Install App</button>
+                </header>
                 <div id="overview-section" class="content-section active"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Sales</h3><p id="stat-today-sales" class="text-3xl font-bold text-slate-800">Ksh 0.00</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Today's Profit</h3><p id="stat-today-profit" class="text-3xl font-bold text-green-600">Ksh 0.00</p></div><div id="low-stock-card" class="stat-card hover:bg-orange-50 cursor-pointer"><h3 class="text-slate-500 font-semibold">Low Stock Items</h3><p id="stat-low-stock" class="text-3xl font-bold text-orange-500">0</p></div><div class="stat-card"><h3 class="text-slate-500 font-semibold">Total Products</h3><p id="stat-total-products" class="text-3xl font-bold text-slate-800">0</p></div></div></div>
                 <div id="products-section" class="content-section"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-slate-800">Product Management</h2><button id="add-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg"><i class="fas fa-plus mr-2"></i>Add New Product</button></div><div class="bg-white p-4 rounded-lg shadow"><div id="product-list-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
                 <div id="inventory-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Inventory Levels</h2><div id="inventory-list-container"></div></div></div>
-                <div id="reports-section" class="content-section"><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">All Sales Transactions</h2><div id="sales-report-container" class="max-h-[65vh] overflow-y-auto"></div></div></div>
+                <div id="reports-section" class="content-section">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">Download Sales Reports</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                            <div>
+                                <label for="daily-report-date" class="block text-sm font-medium text-slate-700">Select Day for Report</label>
+                                <input type="date" id="daily-report-date" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500">
+                            </div>
+                            <button id="download-daily-report" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition h-fit"><i class="fas fa-file-csv mr-2"></i>Daily Report</button>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button id="download-weekly-report" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-file-csv mr-2"></i>This Week</button>
+                                <button id="download-monthly-report" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-file-csv mr-2"></i>This Month</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow mt-6">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4">Live Sales Transactions</h2>
+                        <div id="sales-report-container" class="max-h-[65vh] overflow-y-auto"></div>
+                    </div>
+                </div>
                 <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
             </main>
         </div>
     </div>
 
-    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="install-app-btn" class="hidden ml-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition"><i class="fas fa-download mr-2"></i>Install App</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
+    <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-install-app-btn" class="hidden ml-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition"><i class="fas fa-download mr-2"></i>Install App</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
     
     <!-- Modals -->
     <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (Ksh)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
@@ -97,11 +119,8 @@
                 db = getFirestore(app);
                 await enableIndexedDbPersistence(db);
             } catch (err) { 
-                if (err.code == 'failed-precondition') {
-                    console.warn("Offline persistence can only be enabled in one tab at a time.");
-                } else if (err.code == 'unimplemented') {
-                    console.warn("Browser does not support all features for offline persistence.");
-                }
+                if (err.code == 'failed-precondition') { console.warn("Offline persistence can only be enabled in one tab at a time."); } 
+                else if (err.code == 'unimplemented') { console.warn("Browser does not support all features for offline persistence."); }
             }
 
             const authContainer = document.getElementById('auth-container');
@@ -109,12 +128,11 @@
             const loginErrorMessage = document.getElementById('login-error-message');
             const dashboards = { admin: document.getElementById('admin-dashboard'), servant: document.getElementById('servant-dashboard') };
             let allProducts = [];
+            let allSales = [];
             let currentUserProfile = null;
             
             const offlineIndicator = document.getElementById('offline-indicator');
-            const updateOnlineStatus = () => {
-                offlineIndicator.classList.toggle('hidden', navigator.onLine);
-            };
+            const updateOnlineStatus = () => offlineIndicator.classList.toggle('hidden', navigator.onLine);
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
             updateOnlineStatus();
@@ -171,19 +189,19 @@
                 const salesQuery = query(collection(db, "sales"), orderBy("createdAt", "desc"));
                 onSnapshot(salesQuery, (snapshot) => {
                     let todaySales = 0, todayProfit = 0;
-                    const sales = [];
+                    allSales = [];
                     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
                     snapshot.forEach(doc => {
                         const sale = { id: doc.id, ...doc.data() };
-                        sales.push(sale);
+                        allSales.push(sale);
                         if (sale.createdAt.toDate() >= todayStart) {
                             todaySales += sale.total;
-                            sale.items.forEach(item => { const product = allProducts.find(p => p.id === item.id); todayProfit += (item.price - (product?.costPrice || 0)) * item.qty; });
+                            sale.items.forEach(item => { const product = allProducts.find(p => p.id === item.id); if(product) { todayProfit += (item.price - product.costPrice) * item.qty; } });
                         }
                     });
                     statTodaySales.textContent = `Ksh ${todaySales.toFixed(2)}`;
                     statTodayProfit.textContent = `Ksh ${todayProfit.toFixed(2)}`;
-                    renderSalesReport(sales);
+                    renderSalesReport(allSales);
                 });
 
                 const productsQuery = query(collection(db, "products"), orderBy("name"));
@@ -194,10 +212,7 @@
                     snapshot.forEach(doc => {
                         const product = { id: doc.id, ...doc.data() };
                         allProducts.push(product);
-                        if (product.stock <= 5) {
-                            lowStockCount++;
-                            lowStockItems.push(product);
-                        }
+                        if (product.stock <= 5) { lowStockCount++; lowStockItems.push(product); }
                     });
                     statTotalProducts.textContent = snapshot.size;
                     statLowStock.textContent = lowStockCount;
@@ -232,14 +247,7 @@
                 });
             }
 
-            function renderLowStockList(lowStockItems) {
-                if (lowStockItems.length === 0) {
-                    lowStockListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No items are currently low on stock.</p>';
-                    return;
-                }
-                lowStockListContainer.innerHTML = `<div class="space-y-2">${lowStockItems.map(p => `<div class="flex justify-between items-center bg-slate-50 p-3 rounded-md"><p class="font-semibold">${p.name}</p><p class="text-sm font-bold ${p.stock === 0 ? 'text-red-600' : 'text-orange-600'}">Stock: ${p.stock}</p></div>`).join('')}</div>`;
-            }
-
+            function renderLowStockList(lowStockItems) { if (lowStockItems.length === 0) { lowStockListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No items are currently low on stock.</p>'; return; } lowStockListContainer.innerHTML = `<div class="space-y-2">${lowStockItems.map(p => `<div class="flex justify-between items-center bg-slate-50 p-3 rounded-md"><p class="font-semibold">${p.name}</p><p class="text-sm font-bold ${p.stock === 0 ? 'text-red-600' : 'text-orange-600'}">Stock: ${p.stock}</p></div>`).join('')}</div>`; }
             function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Time</th><th class="p-3">Cashier</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleDateString()}</td><td class="p-3">${s.createdAt.toDate().toLocaleTimeString()}</td><td class="p-3">${s.cashierName || 'N/A'}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderInventoryList(inventory) { if (inventory.length === 0) { inventoryListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products in inventory.</p>'; return; } inventoryListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product</th><th class="p-3 text-right">Stock</th><th class="p-3 text-right">Cost Value</th></tr></thead><tbody class="divide-y divide-slate-200">${inventory.map(p => `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right ${p.stock <= 5 ? 'text-red-500 font-bold' : ''}">${p.stock}</td><td class="p-3 text-right">Ksh ${(p.stock * p.costPrice).toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
             function renderUserList(users) { if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; } userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role}</p></div><button data-id="${u.id}" data-name="${u.name}" class="delete-user-btn text-red-500 hover:text-red-700 text-sm font-semibold">Delete</button></div>`).join('')}</div>`; }
@@ -276,7 +284,7 @@
             document.getElementById('print-receipt-btn').addEventListener('click', () => window.print());
             document.getElementById('download-receipt-btn').addEventListener('click', () => {
                 const receiptElement = document.getElementById('receipt-container');
-                html2canvas(receiptElement).then(canvas => {
+                html2canvas(receiptElement, { backgroundColor: '#ffffff' }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `receipt-${new Date().toISOString().slice(0,16).replace('T', '_').replace(':', '-')}.png`;
                     link.href = canvas.toDataURL('image/png');
@@ -333,27 +341,146 @@
             let html5QrCode;
             scanBarcodeBtn.addEventListener('click', () => { 
                 scannerModal.classList.remove('hidden'); 
-                if (!html5QrCode) {
-                    html5QrCode = new Html5Qrcode("barcode-scanner-view");
-                }
+                if (!html5QrCode) { html5QrCode = new Html5Qrcode("barcode-scanner-view"); }
                 html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess, ()=>{}); 
             });
             function onScanSuccess(decodedText, decodedResult) { 
                 if(html5QrCode && html5QrCode.isScanning) {
-                    html5QrCode.stop().then(() => { 
-                        scannerModal.classList.add('hidden'); 
-                        findProductByBarcode(decodedText); 
-                    }).catch(err => console.error("Error stopping scanner", err)); 
+                    html5QrCode.stop().then(() => { scannerModal.classList.add('hidden'); findProductByBarcode(decodedText); }).catch(err => console.error("Error stopping scanner", err)); 
                 }
             }
             closeScannerBtn.addEventListener('click', () => { 
-                 if(html5QrCode && html5QrCode.isScanning) {
-                    html5QrCode.stop().then(() => scannerModal.classList.add('hidden')).catch(err => scannerModal.classList.add('hidden')); 
-                 } else {
-                    scannerModal.classList.add('hidden');
-                 }
+                 if(html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().then(() => scannerModal.classList.add('hidden')).catch(err => scannerModal.classList.add('hidden')); } 
+                 else { scannerModal.classList.add('hidden'); }
             });
             async function findProductByBarcode(barcode) { const q = query(collection(db, "products"), where("barcode", "==", barcode)); const querySnapshot = await getDocs(q); if (querySnapshot.empty) { alert(`Product with barcode "${barcode}" not found.`); } else { const productDoc = querySnapshot.docs[0]; const product = { id: productDoc.id, ...productDoc.data() }; addProductToCart(product); } }
+        
+            // --- REPORTING LOGIC ---
+            function generateReport(startDate, endDate, reportType) {
+                const filteredSales = allSales.filter(sale => {
+                    const saleDate = sale.createdAt.toDate();
+                    return saleDate >= startDate && saleDate <= endDate;
+                });
+
+                if (filteredSales.length === 0) {
+                    alert(`No sales data found for the selected ${reportType} period.`);
+                    return;
+                }
+
+                let totalSales = 0;
+                let totalVat = 0;
+                let totalProfit = 0;
+                const productSummary = {};
+                const cashierSummary = {};
+
+                const transactionRows = filteredSales.map(sale => {
+                    totalSales += sale.total;
+                    totalVat += sale.vat;
+                    let saleProfit = 0;
+                    const itemsString = sale.items.map(item => {
+                        const product = allProducts.find(p => p.id === item.id);
+                        const cost = product ? product.costPrice : 0;
+                        const profit = (item.price - cost) * item.qty;
+                        saleProfit += profit;
+                        
+                        productSummary[item.name] = (productSummary[item.name] || 0) + item.qty;
+                        return `${item.name} (x${item.qty})`;
+                    }).join(' | ');
+
+                    totalProfit += saleProfit;
+                    
+                    const cashierName = sale.cashierName || 'N/A';
+                    cashierSummary[cashierName] = (cashierSummary[cashierName] || 0) + sale.total;
+
+                    return [
+                        sale.createdAt.toDate().toLocaleString(),
+                        cashierName,
+                        itemsString,
+                        sale.subtotal.toFixed(2),
+                        sale.vat.toFixed(2),
+                        sale.total.toFixed(2),
+                        saleProfit.toFixed(2)
+                    ];
+                });
+
+                let csvContent = "data:text/csv;charset=utf-8,";
+                
+                // Header
+                csvContent += `SMART SUPPLIERS SALES REPORT\n`;
+                csvContent += `Period,"${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}"\n\n`;
+
+                // Summary
+                csvContent += "SALES SUMMARY\n";
+                csvContent += "Total Sales (inc. VAT),Total VAT,Estimated Gross Profit\n";
+                csvContent += `${totalSales.toFixed(2)},${totalVat.toFixed(2)},${totalProfit.toFixed(2)}\n\n`;
+
+                // Transactions
+                csvContent += "DETAILED TRANSACTION LOG\n";
+                const transactionHeaders = ["Date/Time", "Cashier", "Items Sold", "Subtotal", "VAT", "Total", "Est. Profit"];
+                csvContent += transactionHeaders.join(",") + "\n";
+                transactionRows.forEach(row => {
+                    csvContent += row.map(field => `"${field}"`).join(",") + "\n";
+                });
+                csvContent += "\n";
+
+                // Product Summary
+                csvContent += "SALES BY PRODUCT\n";
+                csvContent += "Product,Total Quantity Sold\n";
+                Object.entries(productSummary).forEach(([name, qty]) => {
+                    csvContent += `"${name}",${qty}\n`;
+                });
+                csvContent += "\n";
+
+                // Cashier Summary
+                csvContent += "SALES BY CASHIER\n";
+                csvContent += "Cashier,Total Sales Value\n";
+                Object.entries(cashierSummary).forEach(([name, total]) => {
+                    csvContent += `"${name}",${total.toFixed(2)}\n`;
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `SmartSuppliers_${reportType}_Report_${startDate.toISOString().slice(0,10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            document.getElementById('download-daily-report').addEventListener('click', () => {
+                const dateVal = document.getElementById('daily-report-date').value;
+                if (!dateVal) {
+                    alert("Please select a date for the daily report.");
+                    return;
+                }
+                const startDate = new Date(dateVal);
+                startDate.setHours(0, 0, 0, 0);
+                const endDate = new Date(dateVal);
+                endDate.setHours(23, 59, 59, 999);
+                generateReport(startDate, endDate, 'Daily');
+            });
+
+            document.getElementById('download-weekly-report').addEventListener('click', () => {
+                const today = new Date();
+                const dayOfWeek = today.getDay();
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); // Start on Monday
+                startDate.setHours(0, 0, 0, 0);
+                const endDate = new Date(startDate);
+                endDate.setDate(startDate.getDate() + 6);
+                endDate.setHours(23, 59, 59, 999);
+                generateReport(startDate, endDate, 'Weekly');
+            });
+
+            document.getElementById('download-monthly-report').addEventListener('click', () => {
+                const today = new Date();
+                const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                startDate.setHours(0, 0, 0, 0);
+                const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                endDate.setHours(23, 59, 59, 999);
+                generateReport(startDate, endDate, 'Monthly');
+            });
+
         });
     </script>
     
@@ -369,28 +496,30 @@
         }
 
         let deferredPrompt;
-        const installAppBtn = document.getElementById('install-app-btn');
+        const installButtons = [document.getElementById('admin-install-app-btn'), document.getElementById('servant-install-app-btn')];
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installAppBtn.classList.remove('hidden');
+            installButtons.forEach(btn => { if(btn) btn.classList.remove('hidden') });
         });
 
-        installAppBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
-                deferredPrompt = null;
-                installAppBtn.classList.add('hidden');
+        installButtons.forEach(btn => {
+            if(btn) {
+                btn.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        deferredPrompt = null;
+                        installButtons.forEach(b => { if(b) b.classList.add('hidden') });
+                    }
+                });
             }
         });
 
         window.addEventListener('appinstalled', () => {
             deferredPrompt = null;
-            installAppBtn.classList.add('hidden');
-            console.log('Smart Suppliers POS was installed.');
+            installButtons.forEach(b => { if(b) b.classList.add('hidden') });
         });
     </script>
 

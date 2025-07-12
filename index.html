@@ -99,6 +99,7 @@
     <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-medium"><span>Subtotal</span><span id="cart-subtotal">Ksh 0.00</span></div><div class="flex justify-between font-medium"><span>VAT (16%)</span><span id="cart-vat">Ksh 0.00</span></div><div class="flex justify-between font-bold text-2xl text-slate-800 border-t pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Complete Sale</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-install-app-btn" class="hidden ml-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition"><i class="fas fa-download mr-2"></i>Install App</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
     
     <!-- Modals -->
+    <div id="customer-details-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 class="font-bold text-xl mb-4">Enter Customer Details</h3><form id="customer-details-form"><div class="space-y-4"><div><label for="customer-name" class="block text-sm font-medium text-slate-700">Customer Name <span class="text-red-500">*</span></label><input type="text" id="customer-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-phone" class="block text-sm font-medium text-slate-700">Phone Number <span class="text-red-500">*</span></label><input type="tel" id="customer-phone" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-apartment" class="block text-sm font-medium text-slate-700">Apartment (Optional)</label><input type="text" id="customer-apartment" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-house" class="block text-sm font-medium text-slate-700">House Number (Optional)</label><input type="text" id="customer-house" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-customer-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Confirm Sale</button></div></form></div></div>
     <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (Ksh)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
     <div id="scanner-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4">Scan Barcode</h3><div id="barcode-scanner-view" class="w-full"></div><button id="close-scanner-btn" class="mt-4 w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600">Cancel</button></div></div>
     <div id="receipt-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-slate-800"><div id="receipt-container" class="bg-white p-2"></div><div class="mt-6 flex space-x-2"><button id="close-receipt-btn" class="flex-1 bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button><button id="download-receipt-btn" class="flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700"><i class="fas fa-download mr-2"></i>Download</button><button id="print-receipt-btn" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700"><i class="fas fa-print mr-2"></i>Print</button></div></div></div>
@@ -196,7 +197,12 @@
                         allSales.push(sale);
                         if (sale.createdAt.toDate() >= todayStart) {
                             todaySales += sale.total;
-                            sale.items.forEach(item => { const product = allProducts.find(p => p.id === item.id); if(product) { todayProfit += (item.price - product.costPrice) * item.qty; } });
+                            sale.items.forEach(item => { 
+                                const product = allProducts.find(p => p.id === item.id); 
+                                if(product && typeof product.costPrice !== 'undefined') { 
+                                    todayProfit += (item.price - product.costPrice) * item.qty; 
+                                } 
+                            });
                         }
                     });
                     statTodaySales.textContent = `Ksh ${todaySales.toFixed(2)}`;
@@ -280,6 +286,11 @@
             
             const receiptModal = document.getElementById('receipt-modal');
             const receiptContainer = document.getElementById('receipt-container');
+            const customerDetailsModal = document.getElementById('customer-details-modal');
+            const customerDetailsForm = document.getElementById('customer-details-form');
+            const closeCustomerModalBtn = document.getElementById('close-customer-modal-btn');
+            
+            closeCustomerModalBtn.addEventListener('click', () => customerDetailsModal.classList.add('hidden'));
             document.getElementById('close-receipt-btn').addEventListener('click', () => receiptModal.classList.add('hidden'));
             document.getElementById('print-receipt-btn').addEventListener('click', () => window.print());
             document.getElementById('download-receipt-btn').addEventListener('click', () => {
@@ -292,37 +303,78 @@
                 });
             });
 
-            completeSaleBtn.addEventListener('click', async () => {
-                if (currentCart.length === 0) return; if (!confirm("Proceed to complete this sale?")) return;
-                const saleData = { items: currentCart.map(item => ({ id: item.id, name: item.name, qty: item.qty, price: item.sellingPrice })), subtotal: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0), vat: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 0.16, total: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 1.16, cashierId: auth.currentUser.uid, cashierName: currentUserProfile.name, createdAt: serverTimestamp() };
+            completeSaleBtn.addEventListener('click', () => {
+                if (currentCart.length === 0) return;
+                customerDetailsForm.reset();
+                customerDetailsModal.classList.remove('hidden');
+            });
+
+            customerDetailsForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const customerName = document.getElementById('customer-name').value;
+                const customerPhone = document.getElementById('customer-phone').value;
+                const customerApartment = document.getElementById('customer-apartment').value || 'N/A';
+                const customerHouse = document.getElementById('customer-house').value || 'N/A';
+
+                const saleData = { 
+                    items: currentCart.map(item => ({ id: item.id, name: item.name, qty: item.qty, price: item.sellingPrice })), 
+                    subtotal: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0), 
+                    vat: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 0.16, 
+                    total: currentCart.reduce((acc, item) => acc + (item.sellingPrice * item.qty), 0) * 1.16, 
+                    cashierId: auth.currentUser.uid, 
+                    cashierName: currentUserProfile.name, 
+                    customer: {
+                        name: customerName,
+                        phone: customerPhone,
+                        apartment: customerApartment,
+                        house: customerHouse
+                    },
+                    createdAt: serverTimestamp() 
+                };
                 try {
-                    const batch = writeBatch(db); const salesRef = doc(collection(db, "sales")); batch.set(salesRef, saleData);
-                    currentCart.forEach(item => { const productRef = doc(db, "products", item.id); batch.update(productRef, { stock: increment(-item.qty) }); });
+                    const batch = writeBatch(db); 
+                    const salesRef = doc(collection(db, "sales")); 
+                    batch.set(salesRef, saleData);
+                    currentCart.forEach(item => { 
+                        const productRef = doc(db, "products", item.id); 
+                        batch.update(productRef, { stock: increment(-item.qty) }); 
+                    });
                     await batch.commit();
+                    customerDetailsModal.classList.add('hidden');
                     showReceipt(saleData);
-                    currentCart = []; renderCart();
-                } catch (error) { console.error("Error completing sale: ", error); alert("Sale failed. Please try again."); }
+                    currentCart = []; 
+                    renderCart();
+                } catch (error) { 
+                    console.error("Error completing sale: ", error); 
+                    alert("Sale failed. Please try again."); 
+                }
             });
 
             function showReceipt(sale) {
                 const now = new Date();
+                const customer = sale.customer || {};
                 receiptContainer.innerHTML = `
                     <div class="text-center mb-4">
                         <h2 class="text-2xl font-bold smart-suppliers-logo"><span class="smart">SMART</span> <span class="suppliers">SUPPLIERS</span></h2>
                         <p class="text-sm">Official Receipt</p>
                         <p class="text-xs">${now.toLocaleString()}</p>
                     </div>
-                    <div class="border-t border-b border-dashed py-2 space-y-1">
+                    <div class="text-left text-xs mb-3 border-t border-b py-2">
+                        <p><strong>Customer:</strong> ${customer.name || 'N/A'}</p>
+                        <p><strong>Phone:</strong> ${customer.phone || 'N/A'}</p>
+                        <p><strong>Address:</strong> ${customer.apartment || ''} - ${customer.house || ''}</p>
+                    </div>
+                    <div class="border-b border-dashed py-2 space-y-1">
                         ${sale.items.map(item => `
                             <div class="flex justify-between text-sm">
                                 <span>${item.name} (x${item.qty})</span>
-                                <span>Ksh ${(item.price * item.qty).toFixed(2)}</span>
+                                <span></span>
                             </div>
                         `).join('')}
                     </div>
                     <div class="mt-4 space-y-1 text-sm">
-                        <div class="flex justify-between"><span>Subtotal:</span><span>Ksh ${sale.subtotal.toFixed(2)}</span></div>
-                        <div class="flex justify-between"><span>VAT (16%):</span><span>Ksh ${sale.vat.toFixed(2)}</span></div>
+                        <div class="flex justify-between"><span>Subtotal:</span><span></span></div>
+                        <div class="flex justify-between"><span>VAT (16%):</span><span></span></div>
                         <div class="flex justify-between font-bold text-lg border-t pt-1 mt-1"><span>TOTAL:</span><span>Ksh ${sale.total.toFixed(2)}</span></div>
                     </div>
                     <p class="text-center text-xs mt-4">You were served by: <strong>${sale.cashierName}</strong></p>
@@ -379,7 +431,7 @@
                     let saleProfit = 0;
                     const itemsString = sale.items.map(item => {
                         const product = allProducts.find(p => p.id === item.id);
-                        const cost = product ? product.costPrice : 0;
+                        const cost = (product && typeof product.costPrice !== 'undefined') ? product.costPrice : 0;
                         const profit = (item.price - cost) * item.qty;
                         saleProfit += profit;
                         
@@ -392,9 +444,13 @@
                     const cashierName = sale.cashierName || 'N/A';
                     cashierSummary[cashierName] = (cashierSummary[cashierName] || 0) + sale.total;
 
+                    const customer = sale.customer || {};
                     return [
                         sale.createdAt.toDate().toLocaleString(),
                         cashierName,
+                        customer.name || 'N/A',
+                        customer.phone || 'N/A',
+                        `${customer.apartment || ''} - ${customer.house || ''}`,
                         itemsString,
                         sale.subtotal.toFixed(2),
                         sale.vat.toFixed(2),
@@ -405,25 +461,21 @@
 
                 let csvContent = "data:text/csv;charset=utf-8,";
                 
-                // Header
                 csvContent += `SMART SUPPLIERS SALES REPORT\n`;
                 csvContent += `Period,"${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}"\n\n`;
 
-                // Summary
                 csvContent += "SALES SUMMARY\n";
                 csvContent += "Total Sales (inc. VAT),Total VAT,Estimated Gross Profit\n";
                 csvContent += `${totalSales.toFixed(2)},${totalVat.toFixed(2)},${totalProfit.toFixed(2)}\n\n`;
 
-                // Transactions
                 csvContent += "DETAILED TRANSACTION LOG\n";
-                const transactionHeaders = ["Date/Time", "Cashier", "Items Sold", "Subtotal", "VAT", "Total", "Est. Profit"];
+                const transactionHeaders = ["Date/Time", "Cashier", "Customer Name", "Customer Phone", "Customer Address", "Items Sold", "Subtotal", "VAT", "Total", "Est. Profit"];
                 csvContent += transactionHeaders.join(",") + "\n";
                 transactionRows.forEach(row => {
                     csvContent += row.map(field => `"${field}"`).join(",") + "\n";
                 });
                 csvContent += "\n";
 
-                // Product Summary
                 csvContent += "SALES BY PRODUCT\n";
                 csvContent += "Product,Total Quantity Sold\n";
                 Object.entries(productSummary).forEach(([name, qty]) => {
@@ -431,7 +483,6 @@
                 });
                 csvContent += "\n";
 
-                // Cashier Summary
                 csvContent += "SALES BY CASHIER\n";
                 csvContent += "Cashier,Total Sales Value\n";
                 Object.entries(cashierSummary).forEach(([name, total]) => {
@@ -464,7 +515,7 @@
                 const today = new Date();
                 const dayOfWeek = today.getDay();
                 const startDate = new Date(today);
-                startDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); // Start on Monday
+                startDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1));
                 startDate.setHours(0, 0, 0, 0);
                 const endDate = new Date(startDate);
                 endDate.setDate(startDate.getDate() + 6);
@@ -501,7 +552,9 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installButtons.forEach(btn => { if(btn) btn.classList.remove('hidden') });
+            if (!window.matchMedia('(display-mode: standalone)').matches) {
+                installButtons.forEach(btn => { if(btn) btn.classList.remove('hidden') });
+            }
         });
 
         installButtons.forEach(btn => {

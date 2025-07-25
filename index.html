@@ -647,20 +647,20 @@
             document.getElementById('close-product-modal-btn').addEventListener('click', () => addProductModal.classList.add('hidden'));
            
             // =================================================================
-            // START: CORRECTED PRODUCT FORM SUBMISSION LOGIC
+            // START: DEFINITIVE FIX FOR PRODUCT FORM SUBMISSION
             // =================================================================
             productForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const saveButton = document.getElementById('save-product-btn');
                 const originalButtonText = saveButton.textContent;
-                saveButton.disabled = true; // Prevent multiple clicks
+                saveButton.disabled = true;
                 saveButton.textContent = 'Saving...';
 
                 try {
                     const productId = document.getElementById('product-id').value;
                     const isEditing = !!productId;
 
-                    // --- Data Collection and Robust Validation ---
+                    // --- Data Collection and Validation ---
                     const stockByBranch = {};
                     document.querySelectorAll('.stock-input').forEach(input => {
                         stockByBranch[input.dataset.branchId] = parseInt(input.value, 10) || 0;
@@ -669,21 +669,23 @@
                     const costPrice = parseFloat(document.getElementById('product-cost').value);
                     const sellingPrice = parseFloat(document.getElementById('product-price').value);
 
-                    // **FIX:** Check for invalid number inputs, which can cause silent failures.
                     if (isNaN(costPrice) || isNaN(sellingPrice)) {
-                        alert('Error: Cost Price and Selling Price must be valid numbers.');
-                        // Re-throw error to be caught by the outer catch and trigger the 'finally' block.
-                        throw new Error("Invalid number input for prices."); 
+                        throw new Error('Cost Price and Selling Price must be valid numbers.');
                     }
 
+                    // --- Assemble the Data Object ---
+                    // Start with all fields to avoid 'undefined' properties.
                     let productData = {
                         name: document.getElementById('product-name').value,
-                        barcode: document.getElementById('product-barcode').value || '', // Ensure barcode isn't null
+                        barcode: document.getElementById('product-barcode').value || '',
                         costPrice: costPrice,
                         sellingPrice: sellingPrice,
                         discount: parseFloat(document.getElementById('product-discount').value) || 0,
-                        stock: stockByBranch, // Assign the complete stock map
-                        lastUpdated: serverTimestamp()
+                        stock: stockByBranch,
+                        lastUpdated: serverTimestamp(),
+                        // **CRITICAL FIX**: Initialize imageUrl to a default value (empty string).
+                        // This prevents Firestore from rejecting the object if no image is uploaded.
+                        imageUrl: '' 
                     };
 
                     // --- Image Upload Logic ---
@@ -693,10 +695,13 @@
                         await uploadBytes(imageRef, imageFile);
                         productData.imageUrl = await getDownloadURL(imageRef);
                     } else if (isEditing) {
-                        // Preserve existing image if no new one is uploaded
+                        // If editing and no new image, preserve the old one.
                         const existingProduct = allProducts.find(p => p.id === productId);
-                        productData.imageUrl = (existingProduct && existingProduct.imageUrl) ? existingProduct.imageUrl : '';
+                        if (existingProduct && existingProduct.imageUrl) {
+                            productData.imageUrl = existingProduct.imageUrl;
+                        }
                     }
+                    // If creating a new product with no image, productData.imageUrl will correctly remain an empty string.
 
                     // --- Firestore Operation ---
                     if (isEditing) {
@@ -711,20 +716,17 @@
                     addProductModal.classList.add('hidden');
 
                 } catch (error) {
-                    // This catch block is crucial for reporting errors to the user.
-                    // The alert from the validation check above will show first.
+                    // Log the full error to the console for debugging, and show a user-friendly message.
                     console.error("Error saving product:", error);
-                    if (error.message !== "Invalid number input for prices.") {
-                       alert("Could not save product. Error: " + error.message);
-                    }
+                    alert("Could not save product. Error: " + error.message);
                 } finally {
-                    // **FIX:** This 'finally' block ensures the button is always re-enabled.
+                    // This 'finally' block ensures the button is always re-enabled and text is restored.
                     saveButton.disabled = false;
                     saveButton.textContent = originalButtonText;
                 }
             });
             // =================================================================
-            // END: CORRECTED PRODUCT FORM SUBMISSION LOGIC
+            // END: DEFINITIVE FIX FOR PRODUCT FORM SUBMISSION
             // =================================================================
 
             // FIXED: This function now calculates the final price including discount and VAT

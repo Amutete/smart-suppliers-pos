@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-branch" class="block text-sm font-medium text-slate-700">Assign to Branch</label><select id="servant-branch" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"><option value="">Select a Branch</option></select></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
+                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-branch" class="block text-sm font-medium text-slate-700">Assign to Branch</label><select id="servant-branch" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"><option value="">Select a Branch</option></select></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div>
                 <div id="notes-section" class="content-section">
                     <div class="bg-white p-6 rounded-lg shadow">
                         <h2 class="text-2xl font-bold text-slate-800 mb-4">My Daily Notes</h2>
@@ -646,66 +646,91 @@
             });
             document.getElementById('close-product-modal-btn').addEventListener('click', () => addProductModal.classList.add('hidden'));
            
+            // =================================================================
+            // START: CORRECTED PRODUCT FORM SUBMISSION LOGIC
+            // =================================================================
             productForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const productId = document.getElementById('product-id').value;
-                const isEditing = !!productId;
+                const saveButton = document.getElementById('save-product-btn');
+                const originalButtonText = saveButton.textContent;
+                saveButton.disabled = true; // Prevent multiple clicks
+                saveButton.textContent = 'Saving...';
 
-                // Collect stock from all branch inputs
-                const stockByBranch = {};
-                document.querySelectorAll('.stock-input').forEach(input => {
-                    stockByBranch[input.dataset.branchId] = parseInt(input.value) || 0;
-                });
-                
-                let productData = {
-                    name: document.getElementById('product-name').value,
-                    barcode: document.getElementById('product-barcode').value,
-                    costPrice: parseFloat(document.getElementById('product-cost').value),
-                    sellingPrice: parseFloat(document.getElementById('product-price').value),
-                    discount: parseFloat(document.getElementById('product-discount').value) || 0,
-                    lastUpdated: serverTimestamp()
-                };
-
-                // Handle stock differently for new vs existing products
-                if (isEditing) {
-                    productData.stock = stockByBranch;
-                } else {
-                    productData.stock = stockByBranch;
-                    // The old single stock input is no longer used for new products
-                }
-
-                const imageFile = productImageInput.files[0];
                 try {
+                    const productId = document.getElementById('product-id').value;
+                    const isEditing = !!productId;
+
+                    // --- Data Collection and Robust Validation ---
+                    const stockByBranch = {};
+                    document.querySelectorAll('.stock-input').forEach(input => {
+                        stockByBranch[input.dataset.branchId] = parseInt(input.value, 10) || 0;
+                    });
+
+                    const costPrice = parseFloat(document.getElementById('product-cost').value);
+                    const sellingPrice = parseFloat(document.getElementById('product-price').value);
+
+                    // **FIX:** Check for invalid number inputs, which can cause silent failures.
+                    if (isNaN(costPrice) || isNaN(sellingPrice)) {
+                        alert('Error: Cost Price and Selling Price must be valid numbers.');
+                        // Re-throw error to be caught by the outer catch and trigger the 'finally' block.
+                        throw new Error("Invalid number input for prices."); 
+                    }
+
+                    let productData = {
+                        name: document.getElementById('product-name').value,
+                        barcode: document.getElementById('product-barcode').value || '', // Ensure barcode isn't null
+                        costPrice: costPrice,
+                        sellingPrice: sellingPrice,
+                        discount: parseFloat(document.getElementById('product-discount').value) || 0,
+                        stock: stockByBranch, // Assign the complete stock map
+                        lastUpdated: serverTimestamp()
+                    };
+
+                    // --- Image Upload Logic ---
+                    const imageFile = productImageInput.files[0];
                     if (imageFile) {
                         const imageRef = ref(storage, `product_images/${Date.now()}_${imageFile.name}`);
                         await uploadBytes(imageRef, imageFile);
                         productData.imageUrl = await getDownloadURL(imageRef);
-                    } else if (productId) {
+                    } else if (isEditing) {
+                        // Preserve existing image if no new one is uploaded
                         const existingProduct = allProducts.find(p => p.id === productId);
-                        if (existingProduct && existingProduct.imageUrl) {
-                            productData.imageUrl = existingProduct.imageUrl;
-                        }
+                        productData.imageUrl = (existingProduct && existingProduct.imageUrl) ? existingProduct.imageUrl : '';
                     }
 
-                    if (productId) {
+                    // --- Firestore Operation ---
+                    if (isEditing) {
                         await updateDoc(doc(db, "products", productId), productData);
-                        alert("Product updated!");
+                        alert("Product updated successfully!");
                     } else {
                         productData.createdAt = serverTimestamp();
                         await addDoc(collection(db, "products"), productData);
-                        alert("Product added!");
+                        alert("Product added successfully!");
                     }
+
                     addProductModal.classList.add('hidden');
+
                 } catch (error) {
-                    alert("Error saving product: " + error.message);
+                    // This catch block is crucial for reporting errors to the user.
+                    // The alert from the validation check above will show first.
                     console.error("Error saving product:", error);
+                    if (error.message !== "Invalid number input for prices.") {
+                       alert("Could not save product. Error: " + error.message);
+                    }
+                } finally {
+                    // **FIX:** This 'finally' block ensures the button is always re-enabled.
+                    saveButton.disabled = false;
+                    saveButton.textContent = originalButtonText;
                 }
             });
+            // =================================================================
+            // END: CORRECTED PRODUCT FORM SUBMISSION LOGIC
+            // =================================================================
 
-            // --- MODIFIED Product Price Calculator ---
+            // FIXED: This function now calculates the final price including discount and VAT
             function setupProductPriceCalculator() {
                 const productPriceInput = document.getElementById('product-price');
-                const productDiscountInput = document.getElementById('product-discount'); // Get the discount input
+                const productDiscountInput = document.getElementById('product-discount');
                 const finalPriceDisplay = document.getElementById('product-final-price-display');
 
                 // A single function to perform the calculation
@@ -720,7 +745,7 @@
                     finalPriceDisplay.textContent = `Ksh ${finalPriceWithVAT.toFixed(2)}`;
                 };
 
-                // Add event listeners to both inputs
+                // Add event listeners to both the price and discount inputs
                 productPriceInput.addEventListener('input', updateFinalPrice);
                 productDiscountInput.addEventListener('input', updateFinalPrice);
             }
@@ -730,6 +755,7 @@
                 if (e.target.closest('.edit-product-btn')) { 
                     const product = JSON.parse(e.target.closest('.edit-product-btn').dataset.product); 
                     document.getElementById('modal-title').textContent = 'Edit Product'; 
+                    document.getElementById('save-product-btn').textContent = 'Update Product';
                     document.getElementById('product-id').value = product.id; 
                     document.getElementById('product-name').value = product.name; 
                     document.getElementById('product-barcode').value = product.barcode; 
@@ -758,7 +784,6 @@
                         imagePreview.src = '';
                         imagePreview.classList.add('hidden');
                     }
-                    document.getElementById('save-product-btn').textContent = 'Update Product'; 
                     addProductModal.classList.remove('hidden'); 
                     document.getElementById('product-price').dispatchEvent(new Event('input')); 
                 }

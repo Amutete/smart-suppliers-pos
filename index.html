@@ -77,7 +77,7 @@
                 <header class="mb-8 flex justify-between items-center">
                     <h1 id="page-title" class="text-4xl font-bold text-slate-800">Overview</h1>
                     <div class="flex items-center">
-                         <label for="branch-selector" class="mr-2 text-slate-600 font-semibold">Branch:</label>
+                         <label for="branch-selector" class="mr-2 text-slate-600 font-semibold text-lg">Branch:</label>
                          <select id="branch-selector" class="bg-white border border-slate-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-slate-800">
                              <option value="all">All Branches</option>
                          </select>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-branch" class="block text-sm font-medium text-slate-700">Assign to Branch</label><select id="servant-branch" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></select></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
+                <div id="users-section" class="content-section"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Create New Servant Account</h2><form id="create-servant-form" class="space-y-4"><div><label for="servant-name" class="block text-sm font-medium text-slate-700">Full Name</label><input type="text" id="servant-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-email" class="block text-sm font-medium text-slate-700">Email Address</label><input type="email" id="servant-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-password" class="block text-sm font-medium text-slate-700">Temporary Password</label><input type="text" id="servant-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"></div><div><label for="servant-branch" class="block text-sm font-medium text-slate-700">Assign to Branch</label><select id="servant-branch" required class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-black"><option value="">Select a Branch</option></select></div><button type="submit" class="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition shadow-lg">Create Account</button></form></div></div><div><div class="bg-white p-6 rounded-lg shadow"><h2 class="text-2xl font-bold text-slate-800 mb-4">Existing Users</h2><div id="user-list-container" class="max-h-[40vh] overflow-y-auto"></div></div></div></div></div>
                 <div id="notes-section" class="content-section">
                     <div class="bg-white p-6 rounded-lg shadow">
                         <h2 class="text-2xl font-bold text-slate-800 mb-4">My Daily Notes</h2>
@@ -158,9 +158,9 @@
 
     <div id="servant-dashboard" class="hidden"><div class="flex flex-col md:flex-row h-screen bg-slate-200"><div class="w-full md:w-1/3 bg-white flex flex-col p-4 shadow-lg"><h2 class="text-2xl font-bold text-slate-800 border-b pb-2">Current Sale</h2><div id="cart-items" class="flex-grow overflow-y-auto py-4 space-y-2"><p class="text-slate-500 text-center mt-10">Cart is empty</p></div><div class="border-t pt-4 space-y-2 text-slate-700"><div class="flex justify-between font-bold text-2xl text-slate-800 pt-2 mt-2"><span>Total</span><span id="cart-total">Ksh 0.00</span></div></div><button id="complete-sale-btn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-lg hover:bg-orange-600 transition shadow-lg mt-4 text-xl disabled:bg-gray-400" disabled>Proceed to Payment</button></div><div class="w-full md:w-2/3 flex flex-col"><header class="bg-white p-4 flex justify-between items-center shadow-md"><div class="flex-1"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="product-search" placeholder="Search for products by name or SKU..." class="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"></div></div><div id="offline-indicator" class="hidden items-center ml-4 text-xs font-bold bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full"><i class="fas fa-wifi-slash mr-2"></i>Offline Mode</div><button id="scan-barcode-btn" class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-barcode mr-2"></i>Scan</button><button id="servant-install-app-btn" class="hidden ml-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition"><i class="fas fa-download mr-2"></i>Install App</button><button id="servant-logout-btn" class="ml-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">Logout</button></header><main id="product-grid" class="flex-grow p-4 overflow-y-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></main></div></div></div>
     
-    <div id="customer-details-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 class="font-bold text-xl mb-4">Customer & Payment</h3><div id="payment-notification" class="hidden mb-4 p-3 rounded-md text-center font-semibold"></div><form id="customer-details-form"><div class="space-y-4"><div><label for="customer-name" class="block text-sm font-medium text-slate-700">Customer Name <span class="text-red-500">*</span></label><input type="text" id="customer-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-phone" class="block text-sm font-medium text-slate-700">Phone Number (For M-Pesa) <span class="text-red-500">*</span></label><input type="tel" id="customer-phone" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" placeholder="e.g. 2547..."><p class="text-xs text-slate-500 mt-1">Required for M-Pesa STK Push.</p></div><div><label for="customer-apartment" class="block text-sm font-medium text-slate-700">Apartment (Optional)</label><input type="text" id="customer-apartment" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-house" class="block text-sm font-medium text-slate-700">House Number (Optional)</label><input type="text" id="customer-house" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-customer-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="button" id="mpesa-payment-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 flex items-center"><i class="fas fa-mobile-alt mr-2"></i>Pay with M-Pesa</button><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Confirm Cash Sale</button></div></form></div></div>
+    <div id="customer-details-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 class="font-bold text-xl mb-4">Customer & Payment</h3><div id="payment-notification" class="hidden mb-4 p-3 rounded-md text-center font-semibold"></div><form id="customer-details-form"><div class="space-y-4"><div><label for="customer-name" class="block text-sm font-medium text-slate-700">Customer Name <span class="text-red-500">*</span></label><input type="text" id="customer-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-phone" class="block text-sm font-medium text-slate-700">Phone Number (For M-Pesa) <span class="text-red-500">*</span></label><input type="tel" id="customer-phone" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500" placeholder="e.g., 2547..."><p class="text-xs text-slate-500 mt-1">Required for M-Pesa STK Push.</p></div><div><label for="customer-apartment" class="block text-sm font-medium text-slate-700">Apartment (Optional)</label><input type="text" id="customer-apartment" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="customer-house" class="block text-sm font-medium text-slate-700">House Number (Optional)</label><input type="text" id="customer-house" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-customer-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="button" id="mpesa-payment-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 flex items-center"><i class="fas fa-mobile-alt mr-2"></i>Pay with M-Pesa</button><button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Confirm Cash Sale</button></div></form></div></div>
 
-    <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (excl. VAT)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div><div id="stock-by-branch-container" class="space-y-2 mt-4"><label class="block text-sm font-medium text-slate-700">Initial Stock Quantity</label></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"><div><label for="product-discount" class="block text-sm font-medium text-slate-700">Discount (%)</label><input type="number" id="product-discount" min="0" max="100" placeholder="e.g., 5 for 5%" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label class="block text-sm font-medium text-slate-700">Final Price (Display)</label><p id="product-final-price-display" class="mt-1 w-full px-3 py-2 bg-slate-100 rounded-md h-[42px] flex items-center font-bold text-slate-600">Ksh 0.00</p></div></div><div><label for="product-image" class="block text-sm font-medium text-slate-700">Product Image (Optional)</label><input type="file" id="product-image" accept="image/*" class="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"></div><div id="image-preview-container" class="mt-2"><img id="image-preview" src="" alt="Image Preview" class="hidden max-h-32 rounded-lg"/></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
+    <div id="add-product-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg text-slate-800"><h3 id="modal-title" class="font-bold text-xl mb-4">Add New Product</h3><form id="product-form"><input type="hidden" id="product-id"><div class="space-y-4"><div><label for="product-name" class="block text-sm font-medium text-slate-700">Product Name</label><input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-barcode" class="block text-sm font-medium text-slate-700">Barcode / SKU (Optional)</label><input type="text" id="product-barcode" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="product-cost" class="block text-sm font-medium text-slate-700">Cost Price (Ksh)</label><input type="number" step="0.01" id="product-cost" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div id="initial-stock-qty-container-legacy"><label for="product-stock" class="block text-sm font-medium text-slate-700">Initial Stock Qty</label><input type="number" id="product-stock" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div><div id="stock-by-branch-container" class="space-y-2 mt-4"></div> <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"><div><label for="product-price" class="block text-sm font-medium text-slate-700">Selling Price (excl. VAT)</label><input type="number" step="0.01" id="product-price" required class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div><div><label for="product-discount" class="block text-sm font-medium text-slate-700">Discount (%)</label><input type="number" id="product-discount" min="0" max="100" placeholder="e.g., 5 for 5%" class="mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"></div></div><div class="mt-4"><label class="block text-sm font-medium text-slate-700">Final Price (Display)</label><p id="product-final-price-display" class="mt-1 w-full px-3 py-2 bg-slate-100 rounded-md h-[42px] flex items-center font-bold text-slate-600">Ksh 0.00</p></div><div><label for="product-image" class="block text-sm font-medium text-slate-700">Product Image (Optional)</label><input type="file" id="product-image" accept="image/*" class="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"></div><div id="image-preview-container" class="mt-2"><img id="image-preview" src="" alt="Image Preview" class="hidden max-h-32 rounded-lg"/></div></div><div class="mt-6 flex justify-end space-x-3"><button type="button" id="close-product-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Cancel</button><button type="submit" id="save-product-btn" class="bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600">Save Product</button></div></form></div></div>
     <div id="scanner-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4">Scan Barcode</h3><div id="barcode-scanner-view" class="w-full"></div><button id="close-scanner-btn" class="mt-4 w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600">Cancel</button></div></div>
     <div id="receipt-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-slate-800"><div id="receipt-container" class="bg-white p-2"></div><div class="mt-6 flex space-x-2"><button id="close-receipt-btn" class="flex-1 bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button><button id="download-receipt-btn" class="flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700"><i class="fas fa-download mr-2"></i>Download</button><button id="print-receipt-btn" class="flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700"><i class="fas fa-print mr-2"></i>Print</button></div></div></div>
     <div id="low-stock-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-slate-800"><h3 class="font-bold text-xl mb-4 text-orange-500">Low Stock Items</h3><div id="low-stock-list-container" class="max-h-[60vh] overflow-y-auto"></div><div class="mt-6 flex justify-end"><button type="button" id="close-low-stock-modal-btn" class="bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-lg hover:bg-slate-300">Close</button></div></div></div>
@@ -170,18 +170,20 @@
     </footer>
 
     <script type="module">
+        // MODIFIED IMPORTS
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword, updateProfile, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, query, orderBy, where, getDocs, writeBatch, serverTimestamp, increment, setDoc, updateDoc, deleteDoc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
         import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
 
-        // WebAuthn browser function
+        // ADDED: WebAuthn browser function
         const { startRegistration, startAuthentication } = SimpleWebAuthnBrowser;
 
         document.addEventListener("DOMContentLoaded", async () => {
             const firebaseConfig = { apiKey: "AIzaSyDvai9ngziMFmrZiHclzTu1R5wVr0-xf9U", authDomain: "smart-suppliers.firebaseapp.com", projectId: "smart-suppliers", storageBucket: "smart-suppliers.appspot.com", messagingSenderId: "695784334948", appId: "1:695784334948:web:dda5b9b89c686a42476171", measurementId: "G-Q1BFZM7W93" };
             
+            // MODIFIED: Added 'functions'
             let app, auth, db, storage, functions;
             let inactivityTimer;
             
@@ -190,54 +192,135 @@
                 auth = getAuth(app); 
                 db = getFirestore(app);
                 storage = getStorage(app);
-                functions = getFunctions(app, 'us-central1'); // Or your preferred region
+                // ADDED: Initialize functions. Change region if yours is different.
+                functions = getFunctions(app, 'us-central1'); 
                 await enableIndexedDbPersistence(db);
+                // Original initOfflineSync() call is kept
+                initOfflineSync();
             } catch (err) { 
-                console.error("Firebase Init Error:", err);
+                if (err.code == 'failed-precondition') { console.warn("Offline persistence can only be enabled in one tab at a time."); } 
+                else if (err.code == 'unimplemented') { console.warn("Browser does not support all features for offline persistence."); }
             }
 
-            // ... (rest of your existing setup code like resetInactivityTimer, setupActivityListeners, etc.)
-            
-            // MODIFIED onAuthStateChanged to handle multi-branch
+            // --- ORIGINAL CODE (PRESERVED) ---
+            const resetInactivityTimer = () => {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(() => {
+                    if (auth.currentUser) {
+                        alert("You have been logged out due to 30 minutes of inactivity.");
+                        signOut(auth);
+                    }
+                }, 30 * 60 * 1000); 
+            };
+            const setupActivityListeners = () => {
+                window.addEventListener('mousemove', resetInactivityTimer);
+                window.addEventListener('mousedown', resetInactivityTimer);
+                window.addEventListener('keypress', resetInactivityTimer);
+                window.addEventListener('scroll', resetInactivityTimer);
+                window.addEventListener('touchstart', resetInactivityTimer);
+            };
+            const authContainer = document.getElementById('auth-container');
+            const loginForm = document.getElementById('login-form');
+            const loginErrorMessage = document.getElementById('login-error-message');
+            const dashboards = { admin: document.getElementById('admin-dashboard'), servant: document.getElementById('servant-dashboard') };
+            let allProducts = [];
+            let allSales = [];
+            let currentUserProfile = null;
+            const offlineIndicator = document.getElementById('offline-indicator');
+            const updateOnlineStatus = () => {
+                const isOffline = !navigator.onLine;
+                offlineIndicator.classList.toggle('hidden', !isOffline);
+                if (!isOffline) {
+                    syncOfflineSales();
+                }
+            };
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+            // --- END OF PRESERVED CODE SECTION ---
+
+            // --- MODIFIED onAuthStateChanged TO HANDLE MULTI-BRANCH ---
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     const userDocRef = doc(db, "users", user.uid);
-                    const userDoc = await getDoc(userDocRef);
-                    if (userDoc.exists()) {
-                        currentUserProfile = { uid: user.uid, ...userDoc.data() };
-                        const role = currentUserProfile.role;
-                        authContainer.style.display = 'none';
-                        Object.values(dashboards).forEach(d => d.classList.add('hidden'));
-                        if (dashboards[role]) {
-                            dashboards[role].classList.remove('hidden');
-                            if (role === 'admin') {
-                                await setupAdminBranchSelector(); // New function
-                                listenForAdminData();
-                                setupNotes();
-                                setupProductPriceCalculator();
-                                setupAnalytics();
-                            } else if (role === 'servant') {
-                                if (!currentUserProfile.branchId) {
-                                    loginErrorMessage.textContent = `You are not assigned to a branch. Contact admin.`;
-                                    await signOut(auth);
-                                    return;
+                    try {
+                        const userDoc = await getDoc(userDocRef);
+                        if (userDoc.exists()) {
+                            currentUserProfile = { uid: user.uid, ...userDoc.data() };
+                            const role = currentUserProfile.role;
+                            authContainer.style.display = 'none';
+                            Object.values(dashboards).forEach(d => d.classList.add('hidden'));
+                            
+                            if (dashboards[role]) { 
+                                dashboards[role].classList.remove('hidden'); 
+                                if (role === 'admin') {
+                                    // ADDED: Setup for admin branch features
+                                    await setupAdminBranchSelector();
+                                    listenForAdminData(); 
+                                    setupNotes(); 
+                                    setupProductPriceCalculator(); 
+                                    setupAnalytics(); 
+                                } else if (role === 'servant') {
+                                    // ADDED: Check if servant is assigned to a branch
+                                    if (!currentUserProfile.branchId) {
+                                        loginErrorMessage.textContent = 'Account not assigned to a branch. Contact admin.';
+                                        await signOut(auth);
+                                        return;
+                                    }
+                                    listenForServantData(); 
                                 }
-                                listenForServantData();
+                            } else { 
+                                loginErrorMessage.textContent = `Your user role is not supported.`; 
+                                await signOut(auth); 
                             }
-                        } else {
-                            loginErrorMessage.textContent = `Your user role is not supported.`;
-                            await signOut(auth);
+                            setupActivityListeners();
+                            resetInactivityTimer();
+                        } else { 
+                            loginErrorMessage.textContent = "Profile not found in database."; 
+                            await signOut(auth); 
                         }
-                        setupActivityListeners();
-                        resetInactivityTimer();
-                    } else { /* ... */ }
-                } else { /* ... */ }
+                    } catch(e) { 
+                        loginErrorMessage.textContent = `Error: ${e.code}. Check Rules.`; 
+                        console.error(e); 
+                        await signOut(auth); 
+                    }
+                } else {
+                    currentUserProfile = null;
+                    authContainer.style.display = 'flex';
+                    Object.values(dashboards).forEach(d => d.classList.add('hidden'));
+                    clearTimeout(inactivityTimer);
+                }
             });
 
-            // --- Multi-Branch Functions ---
+            // --- ORIGINAL LOGIN FORM (PRESERVED) ---
+            loginForm.addEventListener('submit', async (e) => { e.preventDefault(); const email = loginForm['login-email'].value; const password = loginForm['login-password'].value; loginErrorMessage.textContent = ''; try { await signInWithEmailAndPassword(auth, email, password); } catch (error) { loginErrorMessage.textContent = "Login failed. Check credentials."; } });
+            document.querySelectorAll('button[id$="-logout-btn"]').forEach(btn => btn.addEventListener('click', () => signOut(auth)));
+            
+            // --- ORIGINAL ADMIN DASHBOARD NAVIGATION (PRESERVED) ---
+            const adminPageTitle = document.getElementById('page-title');
+            const adminSidebarLinks = document.querySelectorAll('.sidebar-link');
+            const adminContentSections = document.querySelectorAll('.content-section');
+            adminSidebarLinks.forEach(link => { link.addEventListener('click', (e) => { if (!e.currentTarget.id.includes('logout') && !e.currentTarget.id.includes('register-fingerprint')) { e.preventDefault(); const targetId = link.dataset.target; if (!targetId) return; adminPageTitle.textContent = targetId.charAt(0).toUpperCase() + targetId.slice(1); adminSidebarLinks.forEach(l => l.classList.remove('active')); link.classList.add('active'); adminContentSections.forEach(section => section.classList.toggle('active', section.id === `${targetId}-section`)); } }); });
+            
+            // --- ORIGINAL DOM ELEMENT VARIABLES (PRESERVED) ---
+            const statTodaySales = document.getElementById('stat-today-sales');
+            const statTodayProfit = document.getElementById('stat-today-profit');
+            const statLowStock = document.getElementById('stat-low-stock');
+            const statTotalProducts = document.getElementById('stat-total-products');
+            const salesReportContainer = document.getElementById('sales-report-container');
+            const inventoryListContainer = document.getElementById('inventory-list-container');
+            const userListContainer = document.getElementById('user-list-container');
+            const productListContainer = document.getElementById('product-list-container');
+            const lowStockCard = document.getElementById('low-stock-card');
+            const lowStockModal = document.getElementById('low-stock-modal');
+            const closeLowStockModalBtn = document.getElementById('close-low-stock-modal-btn');
+            const lowStockListContainer = document.getElementById('low-stock-list-container');
+            lowStockCard.addEventListener('click', () => lowStockModal.classList.remove('hidden'));
+            closeLowStockModalBtn.addEventListener('click', () => lowStockModal.classList.add('hidden'));
+
+            // --- ADDED: Multi-Branch Functions ---
             const branchSelector = document.getElementById('branch-selector');
             let allBranches = [];
-
             async function setupAdminBranchSelector() {
                 const branchesQuery = query(collection(db, "branches"), orderBy("name"));
                 const snapshot = await getDocs(branchesQuery);
@@ -252,7 +335,6 @@
                     branchSelector.appendChild(option);
                 });
                 
-                // Also populate servant creation dropdown
                 const servantBranchSelector = document.getElementById('servant-branch');
                 servantBranchSelector.innerHTML = '<option value="">Select a Branch</option>';
                 allBranches.forEach(branch => {
@@ -262,31 +344,30 @@
                     servantBranchSelector.appendChild(option);
                 });
             }
-            
             branchSelector.addEventListener('change', () => {
-                // Refetch and re-render data based on the selected branch
-                listenForAdminData();
+                listenForAdminData(); 
             });
 
-            // MODIFIED: listenForAdminData to be branch-aware
+            // --- MODIFIED listenForAdminData TO BE BRANCH-AWARE ---
             function listenForAdminData() {
                 const selectedBranchId = branchSelector.value;
 
-                // Products Query
                 const productsQuery = query(collection(db, "products"), orderBy("name"));
                 onSnapshot(productsQuery, (snapshot) => {
                     allProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                     
                     let filteredProducts = allProducts;
                     if (selectedBranchId !== 'all') {
-                        // Filter products that exist in the selected branch's stock
-                        filteredProducts = allProducts.filter(p => p.stock && p.stock[selectedBranchId] !== undefined);
+                        filteredProducts = allProducts.filter(p => p.stock && typeof p.stock[selectedBranchId] !== 'undefined');
                     }
 
                     let lowStockCount = 0;
                     const lowStockItems = [];
                     filteredProducts.forEach(p => {
-                        const stockCount = (selectedBranchId !== 'all') ? p.stock[selectedBranchId] : Object.values(p.stock).reduce((a, b) => a + b, 0);
+                        const stockData = p.stock || {};
+                        const stockCount = (selectedBranchId !== 'all') 
+                            ? (stockData[selectedBranchId] || 0)
+                            : Object.values(stockData).reduce((a, b) => a + b, 0);
                         if (stockCount <= 5) {
                             lowStockCount++;
                             lowStockItems.push({ ...p, displayStock: stockCount });
@@ -295,49 +376,262 @@
 
                     statTotalProducts.textContent = filteredProducts.length;
                     statLowStock.textContent = lowStockCount;
-                    renderInventoryList(filteredProducts, selectedBranchId);
-                    renderProductList(filteredProducts, selectedBranchId);
+                    renderInventoryList(allProducts, selectedBranchId); 
+                    renderProductList(allProducts, selectedBranchId); 
                     renderLowStockList(lowStockItems);
                 });
 
-                // Sales Query
-                let salesQuery;
-                if(selectedBranchId === 'all') {
-                    salesQuery = query(collection(db, "sales"), orderBy("createdAt", "desc"));
-                } else {
-                    salesQuery = query(collection(db, "sales"), where("branchId", "==", selectedBranchId), orderBy("createdAt", "desc"));
-                }
-
+                let salesQuery = (selectedBranchId === 'all')
+                    ? query(collection(db, "sales"), orderBy("createdAt", "desc"))
+                    : query(collection(db, "sales"), where("branchId", "==", selectedBranchId), orderBy("createdAt", "desc"));
+                
                 onSnapshot(salesQuery, (salesSnapshot) => {
-                    // ... (rest of sales processing logic remains similar)
-                    // You can now filter sales by date and branch
+                    let todaySales = 0, todayProfit = 0;
+                    allSales = [];
+                    const todayStart = new Date(); 
+                    todayStart.setHours(0, 0, 0, 0);
+                    
+                    salesSnapshot.forEach(doc => {
+                        const sale = { id: doc.id, ...doc.data() };
+                        allSales.push(sale);
+                        if (sale.createdAt && sale.createdAt.toDate() >= todayStart) {
+                            todaySales += sale.total;
+                            sale.items.forEach(item => { 
+                                const product = allProducts.find(p => p.id === item.id); 
+                                if(product && typeof product.costPrice !== 'undefined') { 
+                                    const cost = product.costPrice;
+                                    const priceAfterDiscount = item.price * (1 - ((item.discount_percentage || 0) / 100));
+                                    todayProfit += (priceAfterDiscount - cost) * item.qty;
+                                } 
+                            });
+                        }
+                    });
+                    statTodaySales.textContent = `Ksh ${todaySales.toFixed(2)}`;
+                    statTodayProfit.textContent = `Ksh ${todayProfit.toFixed(2)}`;
+                    renderSalesReport(allSales);
+                    updateSalesChart(allSales); 
                 });
-                
-                // Users Query - can remain the same or be filtered if needed
-            }
 
-            // MODIFIED: listenForServantData to use servant's branch
-            function listenForServantData() {
-                const branchId = currentUserProfile.branchId;
-                const posProductsQuery = query(collection(db, "products"), where(`stock.${branchId}`, ">", 0), orderBy(`stock.${branchId}`), orderBy("name"));
-                
-                onSnapshot(posProductsQuery, (querySnapshot) => { 
-                    allProducts = [];
-                    productGrid.innerHTML = ''; 
-                    querySnapshot.forEach((doc) => { 
-                        const product = { id: doc.id, ...doc.data() }; 
-                        const stockInBranch = product.stock[branchId];
-                        // Render product card, showing stockInBranch
-                    }); 
+                const usersQuery = query(collection(db, "users"), orderBy("name"));
+                onSnapshot(usersQuery, (snapshot) => {
+                    const users = [];
+                    snapshot.forEach(doc => users.push({ id: doc.id, ...doc.data() }));
+                    renderUserList(users);
                 });
             }
             
-            // MODIFIED: Add product modal to handle stock per branch
-            document.getElementById('add-product-btn').addEventListener('click', async () => {
-                // ... reset form
+            // --- MODIFIED listenForServantData TO BE BRANCH-AWARE ---
+            function listenForServantData() {
+                const branchId = currentUserProfile.branchId;
+                const posProductsQuery = query(collection(db, "products"), orderBy("name"));
+                onSnapshot(posProductsQuery, (querySnapshot) => { 
+                    allProducts = [];
+                    productGrid.innerHTML = ''; 
+                    
+                    const availableProducts = querySnapshot.docs
+                        .map(doc => ({ id: doc.id, ...doc.data() }))
+                        .filter(p => p.stock && p.stock[branchId] > 0);
+
+                    if (availableProducts.length === 0) {
+                        productGrid.innerHTML = '<p class="text-slate-500 col-span-full text-center mt-10">No products available in this branch.</p>';
+                        return;
+                    }
+                    
+                    availableProducts.forEach((product) => { 
+                        const stockInBranch = product.stock[branchId];
+                        const productCard = document.createElement('div'); 
+                        productCard.className = 'bg-white p-3 rounded-lg shadow-md cursor-pointer hover:scale-105 hover:shadow-xl transition-transform flex flex-col'; 
+                        const finalPrice = product.sellingPrice * 1.16;
+                        const imageUrl = product.imageUrl || 'https://via.placeholder.com/150';
+
+                        productCard.innerHTML = `
+                            <img src="${imageUrl}" alt="${product.name}" class="w-full h-24 object-cover rounded-md mb-2" loading="lazy">
+                            <div class="font-bold text-slate-800 truncate flex-grow">${product.name}</div>
+                            <div class="text-sm text-slate-500">Stock: ${stockInBranch}</div>
+                            <div class="text-lg font-bold text-orange-500 mt-2">Ksh ${finalPrice.toFixed(2)}</div>
+                        `; 
+                        productCard.addEventListener('click', () => addProductToCart(product)); 
+                        productGrid.appendChild(productCard); 
+                    }); 
+                });
+            }
+
+            // --- ORIGINAL Note Functions (PRESERVED) ---
+            function setupNotes() {
+                const notesTextarea = document.getElementById('admin-notes-textarea');
+                const saveNoteBtn = document.getElementById('save-note-btn');
+                const dailyDateInput = document.getElementById('download-daily-note-date');
+                const downloadDailyBtn = document.getElementById('download-daily-note-btn');
+                const downloadWeeklyBtn = document.getElementById('download-weekly-notes-btn');
+                const downloadMonthlyBtn = document.getElementById('download-monthly-notes-btn');
+
+                const getNoteKey = (d) => {
+                    const date = new Date(d);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `notes_${year}-${month}-${day}`;
+                };
+                
+                const saveNote = () => {
+                    const todayKey = getNoteKey(new Date());
+                    localStorage.setItem(todayKey, notesTextarea.value);
+                    alert("Today's note has been saved!");
+                };
+                
+                const loadNoteForToday = () => {
+                    const todayKey = getNoteKey(new Date());
+                    notesTextarea.value = localStorage.getItem(todayKey) || '';
+                };
+
+                const downloadNote = (content, filename) => {
+                    const blob = new Blob([content], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+
+                saveNoteBtn.addEventListener('click', saveNote);
+                downloadDailyBtn.addEventListener('click', () => {
+                    const selectedDate = dailyDateInput.value;
+                    if (!selectedDate) { alert("Please select a date to download the daily note."); return; }
+                    const key = getNoteKey(selectedDate);
+                    const content = localStorage.getItem(key) || `No notes found for ${selectedDate}.`;
+                    downloadNote(content, `Note_${selectedDate}.txt`);
+                });
+                downloadWeeklyBtn.addEventListener('click', () => {
+                    let compiledNotes = "WEEKLY NOTES REPORT\n====================\n\n";
+                    const today = new Date();
+                    const dayOfWeek = today.getDay();
+                    const startDate = new Date(today);
+                    startDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); 
+                    for (let i = 0; i < 7; i++) {
+                        const currentDate = new Date(startDate);
+                        currentDate.setDate(startDate.getDate() + i);
+                        const dateString = currentDate.toISOString().split('T')[0];
+                        const key = getNoteKey(currentDate);
+                        const content = localStorage.getItem(key);
+                        if (content) { compiledNotes += `--- ${dateString} ---\n${content}\n\n`; }
+                    }
+                    downloadNote(compiledNotes, `Notes_ThisWeek.txt`);
+                });
+                downloadMonthlyBtn.addEventListener('click', () => {
+                    let compiledNotes = "MONTHLY NOTES REPORT\n====================\n\n";
+                    const today = new Date();
+                    const year = today.getFullYear();
+                    const month = today.getMonth();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+                    for (let i = 1; i <= daysInMonth; i++) {
+                         const currentDate = new Date(year, month, i);
+                         const dateString = currentDate.toISOString().split('T')[0];
+                         const key = getNoteKey(currentDate);
+                         const content = localStorage.getItem(key);
+                         if (content) { compiledNotes += `--- ${dateString} ---\n${content}\n\n`; }
+                    }
+                    downloadNote(compiledNotes, `Notes_ThisMonth.txt`);
+                });
+                loadNoteForToday();
+            }
+            
+            // --- ORIGINAL RENDER FUNCTIONS (MODIFIED for Branch-Awareness) ---
+            function renderLowStockList(lowStockItems) { if (lowStockItems.length === 0) { lowStockListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No items are currently low on stock.</p>'; return; } lowStockListContainer.innerHTML = `<div class="space-y-2">${lowStockItems.map(p => `<div class="flex justify-between items-center bg-slate-50 p-3 rounded-md"><p class="font-semibold">${p.name}</p><p class="text-sm font-bold ${p.displayStock === 0 ? 'text-red-600' : 'text-orange-600'}">Stock: ${p.displayStock}</p></div>`).join('')}</div>`; }
+            function renderSalesReport(sales) { if (sales.length === 0) { salesReportContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No sales recorded.</p>'; return; } salesReportContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Date</th><th class="p-3">Time</th><th class="p-3">Cashier</th><th class="p-3">Items</th><th class="p-3 text-right">VAT</th><th class="p-3 text-right">Total</th></tr></thead><tbody class="divide-y divide-slate-200">${sales.map(s => `<tr><td class="p-3">${s.createdAt.toDate().toLocaleDateString()}</td><td class="p-3">${s.createdAt.toDate().toLocaleTimeString()}</td><td class="p-3">${s.cashierName || 'N/A'}</td><td class="p-3">${s.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</td><td class="p-3 text-right">Ksh ${s.vat.toFixed(2)}</td><td class="p-3 text-right font-bold">Ksh ${s.total.toFixed(2)}</td></tr>`).join('')}</tbody></table>`; }
+            function renderInventoryList(inventory, branchId) {
+                if (inventory.length === 0) { inventoryListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products in inventory.</p>'; return; }
+                inventoryListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product</th><th class="p-3 text-right">Stock</th><th class="p-3 text-right">Cost Value</th></tr></thead><tbody class="divide-y divide-slate-200">${inventory.map(p => {
+                    const stockData = p.stock || {};
+                    const stockCount = branchId !== 'all' ? (stockData[branchId] || 0) : Object.values(stockData).reduce((a, b) => a + b, 0);
+                    const costValue = stockCount * p.costPrice;
+                    return `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right ${stockCount <= 5 ? 'text-red-500 font-bold' : ''}">${stockCount}</td><td class="p-3 text-right">Ksh ${costValue.toFixed(2)}</td></tr>`;
+                }).join('')}</tbody></table>`;
+            }
+            function renderUserList(users) {
+                if (users.length === 0) { userListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No users created.</p>'; return; }
+                userListContainer.innerHTML = `<div class="space-y-2">${users.map(u => {
+                    const branchName = u.branchId ? (allBranches.find(b => b.id === u.branchId)?.name || 'N/A') : 'N/A';
+                    return `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-md"><div><p class="font-semibold">${u.name}</p><p class="text-xs text-slate-500">${u.email} | Role: ${u.role} | Branch: ${branchName}</p></div><button data-id="${u.id}" data-name="${u.name}" class="delete-user-btn text-red-500 hover:text-red-700 text-sm font-semibold">Delete</button></div>`;
+                }).join('')}</div>`;
+            }
+            function renderProductList(products, branchId) {
+                if (products.length === 0) { productListContainer.innerHTML = '<p class="text-center text-slate-500 py-8">No products found.</p>'; return; }
+                productListContainer.innerHTML = `<table class="min-w-full text-sm text-left text-slate-800"><thead class="bg-slate-100 text-slate-600"><tr><th class="p-3">Product Name</th><th class="p-3 text-right">Price (ex. VAT)</th><th class="p-3 text-right">Discount</th><th class="p-3 text-right">Stock</th><th class="p-3">Actions</th></tr></thead><tbody class="divide-y divide-slate-200">${products.map(p => {
+                    const stockData = p.stock || {};
+                    const stockCount = branchId !== 'all' ? (stockData[branchId] || 0) : Object.values(stockData).reduce((a, b) => a + b, 0);
+                    return `<tr><td class="p-3 font-semibold">${p.name}</td><td class="p-3 text-right font-bold">Ksh ${p.sellingPrice.toFixed(2)}</td><td class="p-3 text-right">${p.discount || 0}%</td><td class="p-3 text-right">${stockCount}</td><td class="p-3 space-x-2"><button data-product='${JSON.stringify(p)}' class="edit-product-btn text-blue-500 hover:underline text-xs">Edit</button><button data-id="${p.id}" data-name="${p.name}" class="delete-product-btn text-red-500 hover:underline text-xs">Delete</button></td></tr>`;
+                }).join('')}</tbody></table>`;
+            }
+
+            // --- MODIFIED createServantForm TO BE BRANCH-AWARE ---
+            const createServantForm = document.getElementById('create-servant-form');
+            createServantForm.addEventListener('submit', async (e) => { 
+                e.preventDefault(); 
+                const name = document.getElementById('servant-name').value; 
+                const email = document.getElementById('servant-email').value; 
+                const password = document.getElementById('servant-password').value;
+                const branchId = document.getElementById('servant-branch').value; // ADDED
+                if (!branchId) { alert("Please assign the servant to a branch."); return; } // ADDED
+                if (!confirm(`Create servant account for ${name}?`)) return; 
+                
+                const tempApp = initializeApp(firebaseConfig, "secondary" + new Date().getTime()); 
+                const tempAuth = getAuth(tempApp); 
+                try { 
+                    const userCredential = await createUserWithEmailAndPassword(tempAuth, email, password); 
+                    await updateProfile(userCredential.user, { displayName: name }); 
+                    await setDoc(doc(db, "users", userCredential.user.uid), { 
+                        uid: userCredential.user.uid, 
+                        name: name, 
+                        email: email, 
+                        role: 'servant', 
+                        branchId: branchId, // ADDED
+                        createdAt: serverTimestamp() 
+                    }); 
+                    alert(`Successfully created account for ${name}.`); 
+                    createServantForm.reset(); 
+                } catch (error) { 
+                    alert("Error: " + error.message); 
+                } finally { 
+                    await signOut(tempAuth); 
+                } 
+            });
+
+            // --- MODIFIED Add/Edit Product Functions FOR MULTI-BRANCH STOCK ---
+            const addProductModal = document.getElementById('add-product-modal');
+            const productForm = document.getElementById('product-form');
+            const imagePreview = document.getElementById('image-preview');
+            const productImageInput = document.getElementById('product-image');
+
+            productImageInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        imagePreview.src = event.target.result;
+                        imagePreview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.src = '';
+                    imagePreview.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('add-product-btn').addEventListener('click', () => { 
+                productForm.reset(); 
+                document.getElementById('product-id').value = ''; 
+                document.getElementById('modal-title').textContent = 'Add New Product'; 
+                document.getElementById('save-product-btn').textContent = 'Save Product'; 
+                imagePreview.src = ''; 
+                imagePreview.classList.add('hidden'); 
+                
+                // Hide legacy stock input and show branch inputs
+                document.getElementById('initial-stock-qty-container-legacy').style.display = 'none';
                 const stockContainer = document.getElementById('stock-by-branch-container');
                 stockContainer.innerHTML = '<label class="block text-sm font-medium text-slate-700">Initial Stock Quantity</label>';
-                // Dynamically create an input for each branch
                 allBranches.forEach(branch => {
                     stockContainer.innerHTML += `
                         <div class="grid grid-cols-2 items-center gap-2">
@@ -346,28 +640,226 @@
                         </div>
                     `;
                 });
-                addProductModal.classList.remove('hidden');
-            });
 
-            // MODIFIED: Product form submission
+                addProductModal.classList.remove('hidden'); 
+                document.getElementById('product-price').dispatchEvent(new Event('input')); 
+            });
+            document.getElementById('close-product-modal-btn').addEventListener('click', () => addProductModal.classList.add('hidden'));
+           
             productForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                // ... get other product data
-                
+                const productId = document.getElementById('product-id').value;
+                const isEditing = !!productId;
+
                 // Collect stock from all branch inputs
                 const stockByBranch = {};
                 document.querySelectorAll('.stock-input').forEach(input => {
                     stockByBranch[input.dataset.branchId] = parseInt(input.value) || 0;
                 });
-
-                const productData = {
-                    // ... other fields
-                    stock: stockByBranch, // Use the new stock map
+                
+                let productData = {
+                    name: document.getElementById('product-name').value,
+                    barcode: document.getElementById('product-barcode').value,
+                    costPrice: parseFloat(document.getElementById('product-cost').value),
+                    sellingPrice: parseFloat(document.getElementById('product-price').value),
+                    discount: parseFloat(document.getElementById('product-discount').value) || 0,
+                    lastUpdated: serverTimestamp()
                 };
-                // ... rest of save logic
+
+                // Handle stock differently for new vs existing products
+                if (isEditing) {
+                    productData.stock = stockByBranch;
+                } else {
+                    productData.stock = stockByBranch;
+                    // The old single stock input is no longer used for new products
+                }
+
+                const imageFile = productImageInput.files[0];
+                try {
+                    if (imageFile) {
+                        const imageRef = ref(storage, `product_images/${Date.now()}_${imageFile.name}`);
+                        await uploadBytes(imageRef, imageFile);
+                        productData.imageUrl = await getDownloadURL(imageRef);
+                    } else if (productId) {
+                        const existingProduct = allProducts.find(p => p.id === productId);
+                        if (existingProduct && existingProduct.imageUrl) {
+                            productData.imageUrl = existingProduct.imageUrl;
+                        }
+                    }
+
+                    if (productId) {
+                        await updateDoc(doc(db, "products", productId), productData);
+                        alert("Product updated!");
+                    } else {
+                        productData.createdAt = serverTimestamp();
+                        await addDoc(collection(db, "products"), productData);
+                        alert("Product added!");
+                    }
+                    addProductModal.classList.add('hidden');
+                } catch (error) {
+                    alert("Error saving product: " + error.message);
+                    console.error("Error saving product:", error);
+                }
             });
 
-            // MODIFIED: completeSaleBtn now opens payment modal
+            // --- ORIGINAL Product Price Calculator (PRESERVED) ---
+            function setupProductPriceCalculator() {
+                const productPriceInput = document.getElementById('product-price');
+                const finalPriceDisplay = document.getElementById('product-final-price-display');
+                productPriceInput.addEventListener('input', () => {
+                    const sellingPrice = parseFloat(productPriceInput.value) || 0;
+                    const finalPrice = sellingPrice * 1.16;
+                    finalPriceDisplay.textContent = `Ksh ${finalPrice.toFixed(2)}`;
+                });
+            }
+
+            // --- ORIGINAL Event Listeners (MODIFIED for Branch-Aware Edit) ---
+            productListContainer.addEventListener('click', (e) => {
+                if (e.target.closest('.edit-product-btn')) { 
+                    const product = JSON.parse(e.target.closest('.edit-product-btn').dataset.product); 
+                    document.getElementById('modal-title').textContent = 'Edit Product'; 
+                    document.getElementById('product-id').value = product.id; 
+                    document.getElementById('product-name').value = product.name; 
+                    document.getElementById('product-barcode').value = product.barcode; 
+                    document.getElementById('product-cost').value = product.costPrice; 
+                    document.getElementById('product-price').value = product.sellingPrice; 
+                    document.getElementById('product-discount').value = product.discount || 0;
+
+                    // Hide legacy and show branch inputs for editing
+                    document.getElementById('initial-stock-qty-container-legacy').style.display = 'none';
+                    const stockContainer = document.getElementById('stock-by-branch-container');
+                    stockContainer.innerHTML = '<label class="block text-sm font-medium text-slate-700">Update Stock Quantity</label>';
+                    allBranches.forEach(branch => {
+                        const currentStock = (product.stock && product.stock[branch.id]) ? product.stock[branch.id] : 0;
+                        stockContainer.innerHTML += `
+                            <div class="grid grid-cols-2 items-center gap-2">
+                               <label for="stock-${branch.id}" class="text-sm">${branch.name}</label>
+                               <input type="number" id="stock-${branch.id}" data-branch-id="${branch.id}" class="stock-input mt-1 block w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-md shadow-sm" value="${currentStock}">
+                            </div>
+                        `;
+                    });
+                    
+                    if(product.imageUrl) {
+                        imagePreview.src = product.imageUrl;
+                        imagePreview.classList.remove('hidden');
+                    } else {
+                        imagePreview.src = '';
+                        imagePreview.classList.add('hidden');
+                    }
+                    document.getElementById('save-product-btn').textContent = 'Update Product'; 
+                    addProductModal.classList.remove('hidden'); 
+                    document.getElementById('product-price').dispatchEvent(new Event('input')); 
+                }
+                if (e.target.closest('.delete-product-btn')) { const btn = e.target.closest('.delete-product-btn'); const productId = btn.dataset.id; const productName = btn.dataset.name; if (confirm(`Delete "${productName}"?`)) { deleteDoc(doc(db, "products", productId)); } }
+            });
+            userListContainer.addEventListener('click', (e) => { if (e.target.closest('.delete-user-btn')) { const btn = e.target.closest('.delete-user-btn'); const userId = btn.dataset.id; const userName = btn.dataset.name; if (confirm(`Delete user "${userName}"? This will only remove their data, not their login.`)) { deleteDoc(doc(db, "users", userId)); alert("User data deleted. Please remove their login from the Firebase Authentication console manually."); } } });
+
+            // --- ORIGINAL Servant Cart Logic (MODIFIED for Branch-Aware Stock Check) ---
+            const productGrid = document.getElementById('product-grid');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const completeSaleBtn = document.getElementById('complete-sale-btn');
+            let currentCart = [];
+            
+            function addProductToCart(product) { 
+                const branchId = currentUserProfile.branchId;
+                const stockInBranch = (product.stock && product.stock[branchId]) ? product.stock[branchId] : 0;
+
+                if (stockInBranch <= 0) { alert(`${product.name} is out of stock in this branch.`); return; } 
+                const existingItem = currentCart.find(item => item.id === product.id); 
+                if (existingItem) { 
+                    if (existingItem.qty < stockInBranch) { existingItem.qty++; } 
+                    else { alert(`No more stock available for ${product.name} in this branch.`); } 
+                } else { 
+                    currentCart.push({ ...product, qty: 1 }); 
+                } 
+                renderCart(); 
+            }
+            function removeFromCart(productId) { 
+                const itemIndex = currentCart.findIndex(item => item.id === productId); 
+                if (itemIndex > -1) { 
+                    if (currentCart[itemIndex].qty > 1) { 
+                        currentCart[itemIndex].qty--; 
+                    } else { 
+                        currentCart.splice(itemIndex, 1); 
+                    } 
+                } 
+                renderCart(); 
+            }
+            function renderCart() { 
+                if (currentCart.length === 0) { 
+                    cartItemsContainer.innerHTML = '<p class="text-slate-500 text-center mt-10">Cart is empty</p>'; 
+                    completeSaleBtn.disabled = true; 
+                } else { 
+                    cartItemsContainer.innerHTML = ''; 
+                    currentCart.forEach(item => { 
+                        const cartItemEl = document.createElement('div'); 
+                        cartItemEl.className = 'flex items-center justify-between bg-slate-50 p-2 rounded-md'; 
+                        const finalPrice = item.sellingPrice * 1.16; 
+                        const itemDiscount = item.discount || 0;
+                        cartItemEl.innerHTML = `
+                            <div>
+                                <div class="font-semibold text-slate-700">${item.name}</div>
+                                <div class="text-sm text-slate-500">Ksh ${finalPrice.toFixed(2)}</div>
+                                ${itemDiscount > 0 ? `<div class="text-xs font-bold text-blue-600">Discount: ${itemDiscount}%</div>` : ''}
+                            </div>
+                            <div class="flex items-center">
+                                <div class="flex items-center space-x-2 mr-3">
+                                    <button data-id="${item.id}" class="remove-from-cart-btn text-red-500 font-bold px-2">-</button>
+                                    <span class="font-bold w-6 text-center">${item.qty}</span>
+                                    <button data-id="${item.id}" class="add-to-cart-btn text-green-500 font-bold px-2">+</button>
+                                </div>
+                            </div>
+                        `; 
+                        cartItemsContainer.appendChild(cartItemEl); 
+                    }); 
+                    completeSaleBtn.disabled = false; 
+                } 
+                updateTotals(); 
+            }
+            cartItemsContainer.addEventListener('click', (e) => { 
+                if (e.target.closest('.add-to-cart-btn')) { 
+                    const product = allProducts.find(p => p.id === e.target.closest('.add-to-cart-btn').dataset.id); 
+                    if(product) addProductToCart(product); 
+                } 
+                else if (e.target.closest('.remove-from-cart-btn')) { 
+                    removeFromCart(e.target.closest('.remove-from-cart-btn').dataset.id); 
+                }
+            });
+            function updateTotals() { 
+                const total = currentCart.reduce((acc, item) => { 
+                    const discountMultiplier = 1 - ((item.discount || 0) / 100); 
+                    const itemPriceWithVAT = item.sellingPrice * 1.16; 
+                    const finalItemPrice = itemPriceWithVAT * discountMultiplier; 
+                    return acc + (finalItemPrice * item.qty); 
+                }, 0); 
+                document.getElementById('cart-total').textContent = `Ksh ${total.toFixed(2)}`; 
+            }
+            
+            // --- ORIGINAL Receipt & Sale Logic (MODIFIED for Payment Flow) ---
+            const receiptModal = document.getElementById('receipt-modal');
+            const receiptContainer = document.getElementById('receipt-container');
+            const customerDetailsModal = document.getElementById('customer-details-modal');
+            const customerDetailsForm = document.getElementById('customer-details-form');
+            const closeCustomerModalBtn = document.getElementById('close-customer-modal-btn');
+            closeCustomerModalBtn.addEventListener('click', () => {
+                customerDetailsModal.classList.add('hidden');
+                if (saleUnsubscribe) {
+                    saleUnsubscribe(); // Stop listening if modal is closed
+                    saleUnsubscribe = null;
+                }
+            });
+            document.getElementById('close-receipt-btn').addEventListener('click', () => receiptModal.classList.add('hidden'));
+            document.getElementById('print-receipt-btn').addEventListener('click', () => window.print());
+            document.getElementById('download-receipt-btn').addEventListener('click', () => {
+                const receiptElement = document.getElementById('receipt-container');
+                html2canvas(receiptElement, { backgroundColor: '#ffffff' }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `receipt-${new Date().toISOString().slice(0,16).replace('T', '_').replace(':', '-')}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            });
+
             completeSaleBtn.addEventListener('click', () => {
                 if (currentCart.length === 0) return;
                 customerDetailsForm.reset();
@@ -375,145 +867,385 @@
                 document.getElementById('payment-notification').classList.add('hidden');
             });
             
-            // MODIFIED: customerDetailsForm is now for cash sales
-            customerDetailsForm.addEventListener('submit', async (e) => {
-                e.preventDefault(); // This is now for CASH sales
-                processSale('cash');
-            });
-
-            // --- M-Pesa STK Push Functions ---
+            // ADDED: Listener for M-Pesa button
             document.getElementById('mpesa-payment-btn').addEventListener('click', async () => {
                 const customerPhone = document.getElementById('customer-phone').value;
                 if (!customerPhone || !/^(254)\d{9}$/.test(customerPhone)) {
                      alert("Please enter a valid phone number in the format 254xxxxxxxxx.");
                      return;
                 }
+                if (!customerDetailsForm.checkValidity()) {
+                    customerDetailsForm.reportValidity();
+                    return;
+                }
                 processSale('mpesa');
             });
 
-            let saleUnsubscribe = null; // To listen for payment status changes
+            // MODIFIED: customerDetailsForm is now for CASH sales
+            customerDetailsForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); 
+                processSale('cash');
+            });
 
+            // ADDED: Central function to handle sale processing
+            let saleUnsubscribe = null; 
             async function processSale(paymentMethod) {
-                const total = currentCart.reduce((acc, item) => { /*.. calculate total ..*/ return acc; }, 0);
-                const saleData = {
-                    // ... build your saleData object
-                    branchId: currentUserProfile.branchId,
-                    paymentMethod: paymentMethod,
-                    paymentStatus: 'pending' // Initial status
-                };
+                // Disable buttons to prevent double submission
+                customerDetailsForm.querySelector('button[type="submit"]').disabled = true;
+                document.getElementById('mpesa-payment-btn').disabled = true;
 
-                const saleDocRef = await addDoc(collection(db, "sales"), saleData);
+                const customerName = document.getElementById('customer-name').value;
+                const customerPhone = document.getElementById('customer-phone').value;
+                const customerApartment = document.getElementById('customer-apartment').value || 'N/A';
+                const customerHouse = document.getElementById('customer-house').value || 'N/A';
                 
-                if (paymentMethod === 'mpesa') {
-                    const notification = document.getElementById('payment-notification');
+                let subtotal_before_discount = 0;
+                let total_discount_amount = 0;
+                const items_with_discount_info = currentCart.map(item => {
+                    const item_subtotal = item.sellingPrice * item.qty;
+                    subtotal_before_discount += item_subtotal;
+                    const item_discount_amount = item_subtotal * ((item.discount || 0) / 100);
+                    total_discount_amount += item_discount_amount;
+                    return { id: item.id, name: item.name, qty: item.qty, price: item.sellingPrice, costPrice: item.costPrice, discount_percentage: (item.discount || 0), discount_amount: item_discount_amount };
+                });
+                const subtotal_after_discount = subtotal_before_discount - total_discount_amount;
+                const vat = subtotal_after_discount * 0.16;
+                const total = subtotal_after_discount + vat;
+
+                const saleData = { 
+                    items: items_with_discount_info,
+                    subtotal: subtotal_before_discount,
+                    discount: total_discount_amount,
+                    subtotalAfterDiscount: subtotal_after_discount,
+                    vat: vat, 
+                    total: total, 
+                    cashierId: auth.currentUser.uid, 
+                    cashierName: currentUserProfile.name, 
+                    customer: { name: customerName, phone: customerPhone, apartment: customerApartment, house: customerHouse },
+                    createdAt: serverTimestamp(),
+                    branchId: currentUserProfile.branchId, // ADDED
+                    paymentMethod: paymentMethod,
+                    paymentStatus: (paymentMethod === 'cash') ? 'paid' : 'pending'
+                };
+                
+                // For cash sales, finalize immediately
+                if (paymentMethod === 'cash') {
+                    try {
+                        const saleDocRef = await addDoc(collection(db, "sales"), saleData);
+                        await finalizeSale(saleData, saleDocRef.id);
+                    } catch (error) {
+                         alert('Error recording cash sale. Please try again.');
+                         console.error("Cash sale error:", error);
+                    }
+                    return;
+                }
+
+                // For M-Pesa sales
+                const notification = document.getElementById('payment-notification');
+                try {
+                    // Create the sale document first to get an ID
+                    const saleDocRef = await addDoc(collection(db, "sales"), saleData);
+                    
                     notification.textContent = 'STK Push sent. Asking customer to enter PIN...';
                     notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-blue-100 text-blue-800';
                     notification.classList.remove('hidden');
 
-                    try {
-                        const initiateMpesaStkPush = httpsCallable(functions, 'initiateMpesaStkPush');
-                        await initiateMpesaStkPush({
-                            phone: document.getElementById('customer-phone').value,
-                            amount: Math.round(total), // M-Pesa requires an integer
-                            saleId: saleDocRef.id
-                        });
-                        
-                        // Listen for the callback to update the sale status
-                        saleUnsubscribe = onSnapshot(saleDocRef, (doc) => {
-                            const updatedSale = doc.data();
-                            if (updatedSale.paymentStatus === 'paid') {
-                                notification.textContent = 'Payment successful!';
-                                notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-green-100 text-green-800';
-                                finalizeSale(saleData, true);
-                                if (saleUnsubscribe) saleUnsubscribe();
-                            } else if (updatedSale.paymentStatus === 'failed') {
-                                notification.textContent = `Payment failed or cancelled. Reason: ${updatedSale.paymentResult || 'Unknown'}`;
-                                notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-red-100 text-red-800';
-                                if (saleUnsubscribe) saleUnsubscribe();
-                            }
-                        });
+                    const initiateMpesaStkPush = httpsCallable(functions, 'initiateMpesaStkPush');
+                    await initiateMpesaStkPush({
+                        phone: customerPhone,
+                        amount: Math.round(total), // M-Pesa requires an integer
+                        saleId: saleDocRef.id
+                    });
+                    
+                    saleUnsubscribe = onSnapshot(saleDocRef, (doc) => {
+                        const updatedSale = doc.data();
+                        if (updatedSale.paymentStatus === 'paid') {
+                            notification.textContent = 'Payment successful!';
+                            notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-green-100 text-green-800';
+                            setTimeout(() => finalizeSale(updatedSale, doc.id), 1000); // Give user time to see message
+                            if (saleUnsubscribe) saleUnsubscribe();
+                        } else if (updatedSale.paymentStatus === 'failed') {
+                            notification.textContent = `Payment failed or cancelled. Reason: ${updatedSale.paymentResult || 'Unknown'}`;
+                            notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-red-100 text-red-800';
+                            if (saleUnsubscribe) saleUnsubscribe();
+                            // Re-enable buttons on failure
+                            customerDetailsForm.querySelector('button[type="submit"]').disabled = false;
+                            document.getElementById('mpesa-payment-btn').disabled = false;
+                        }
+                    });
 
-                    } catch(error) {
-                        notification.textContent = 'Failed to send STK Push. Please try again or use cash.';
-                        notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-red-100 text-red-800';
-                        console.error("M-Pesa init error:", error);
-                    }
-                } else { // Cash sale
-                     finalizeSale(saleData, false);
+                } catch(error) {
+                    notification.textContent = 'Failed to send STK Push. Please try again or use cash.';
+                    notification.className = 'mb-4 p-3 rounded-md text-center font-semibold bg-red-100 text-red-800';
+                    console.error("M-Pesa init error:", error);
+                    // Re-enable buttons on failure
+                    customerDetailsForm.querySelector('button[type="submit"]').disabled = false;
+                    document.getElementById('mpesa-payment-btn').disabled = false;
                 }
             }
+            
+            async function finalizeSale(saleData, saleId) {
+                // Update stock in Firestore
+                const batch = writeBatch(db); 
+                currentCart.forEach(item => { 
+                    const productRef = doc(db, "products", item.id); 
+                    batch.update(productRef, { [`stock.${currentUserProfile.branchId}`]: increment(-item.qty) }); 
+                });
+                await batch.commit();
 
-            async function finalizeSale(saleData, isPaid) {
-                 // only update stock for paid sales
-                 if (isPaid) {
-                    const batch = writeBatch(db);
-                    currentCart.forEach(item => { 
-                        const productRef = doc(db, "products", item.id); 
-                        batch.update(productRef, { [`stock.${currentUserProfile.branchId}`]: increment(-item.qty) }); 
-                    });
-                    await batch.commit();
-                 }
-                
+                // Re-enable buttons and hide modal
                 customerDetailsModal.classList.add('hidden');
+                customerDetailsForm.querySelector('button[type="submit"]').disabled = false;
+                document.getElementById('mpesa-payment-btn').disabled = false;
+
                 showReceipt(saleData);
                 currentCart = []; 
                 renderCart();
             }
 
-            // --- WebAuthn (Fingerprint) Functions ---
+            // --- ORIGINAL Show Receipt Function (PRESERVED, with minor tweak) ---
+            function showReceipt(sale) {
+                const now = (sale.createdAt && sale.createdAt.toDate) ? sale.createdAt.toDate() : new Date(); // Handle both server and client timestamps
+                const customer = sale.customer || {};
+                const itemsHtml = sale.items.map(item => `<div class="flex justify-between text-sm"><span>${item.name} (x${item.qty}) ${item.discount_percentage > 0 ? `<span class="font-bold text-blue-600">(${item.discount_percentage}% off)</span>` : ''}</span><span></span></div>`).join('');
+                let totalsHtml = (sale.discount > 0) ? `
+                    <div class="flex justify-between"><span>Subtotal:</span><span class="font-semibold">Included</span></div>
+                    <div class="flex justify-between text-red-600"><span>Discount:</span><span>- Ksh ${sale.discount.toFixed(2)}</span></div>
+                    <div class="flex justify-between font-bold border-t pt-1 mt-1"><span>Taxable Amount:</span><span class="font-semibold">Included</span></div>
+                    <div class="flex justify-between"><span>VAT (16%):</span><span class="font-semibold">Included</span></div>
+                    <div class="flex justify-between font-bold text-lg border-t pt-1 mt-1"><span>TOTAL:</span><span>Ksh ${sale.total.toFixed(2)}</span></div>
+                ` : `
+                    <div class="flex justify-between"><span>Subtotal:</span><span class="font-semibold">Included</span></div>
+                    <div class="flex justify-between"><span>VAT (16%):</span><span class="font-semibold">Included</span></div>
+                    <div class="flex justify-between font-bold text-lg border-t pt-1 mt-1"><span>TOTAL:</span><span>Ksh ${sale.total.toFixed(2)}</span></div>
+                `;
+                receiptContainer.innerHTML = `
+                    <div class="text-center mb-4"><h2 class="text-2xl font-bold smart-suppliers-logo"><span class="smart">SMART</span> <span class="suppliers">SUPPLIERS</span></h2><p class="text-sm">Official Receipt</p><p class="text-xs">${now.toLocaleString()}</p></div>
+                    <div class="text-left text-xs mb-3 border-t border-b py-2"><p><strong>Customer:</strong> ${customer.name || 'N/A'}</p><p><strong>Phone:</strong> ${customer.phone || 'N/A'}</p><p><strong>Address:</strong> ${customer.apartment || ''} - ${customer.house || ''}</p></div>
+                    <div class="border-b border-dashed py-2 space-y-1">${itemsHtml}</div>
+                    <div class="mt-4 space-y-1 text-sm">${totalsHtml}</div>
+                    <p class="text-center text-xs mt-4">You were served by: <strong>${sale.cashierName}</strong></p>
+                    <p class="text-center text-xs mt-2">Thank you for your business!</p>
+                    <div class="border-t mt-4 pt-2 text-center text-xs text-slate-600"><p class="flex items-center justify-center"><i class="fas fa-phone-alt mr-2"></i> 0707 700 950 / 0707 700 999</p><p class="flex items-center justify-center"><i class="fas fa-envelope mr-2"></i> smartsuppliers72@gmail.com</p></div>
+                    <div class="text-center text-xs mt-4">Built by: CA Creative Solution<br>0790774517</div>
+                `;
+                receiptModal.classList.remove('hidden');
+            }
+
+            // --- ORIGINAL Barcode Scanner Logic (PRESERVED) ---
+            const scannerModal = document.getElementById('scanner-modal');
+            const scanBarcodeBtn = document.getElementById('scan-barcode-btn');
+            const closeScannerBtn = document.getElementById('close-scanner-btn');
+            let html5QrCode;
+            scanBarcodeBtn.addEventListener('click', () => { 
+                scannerModal.classList.remove('hidden'); 
+                if (!html5QrCode) { html5QrCode = new Html5Qrcode("barcode-scanner-view"); }
+                html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } }, onScanSuccess, ()=>{}); 
+            });
+            function onScanSuccess(decodedText, decodedResult) { 
+                if(html5QrCode && html5QrCode.isScanning) {
+                    html5QrCode.stop().then(() => { scannerModal.classList.add('hidden'); findProductByBarcode(decodedText); }).catch(err => console.error("Error stopping scanner", err)); 
+                }
+            }
+            closeScannerBtn.addEventListener('click', () => { 
+                 if(html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().then(() => scannerModal.classList.add('hidden')).catch(err => scannerModal.classList.add('hidden')); } 
+                 else { scannerModal.classList.add('hidden'); }
+            });
+            async function findProductByBarcode(barcode) { const q = query(collection(db, "products"), where("barcode", "==", barcode)); const querySnapshot = await getDocs(q); if (querySnapshot.empty) { alert(`Product with barcode "${barcode}" not found.`); } else { const productDoc = querySnapshot.docs[0]; const product = { id: productDoc.id, ...productDoc.data() }; addProductToCart(product); } }
+        
+            // --- ORIGINAL Reporting & Analytics Logic (PRESERVED) ---
+            function generateReport(startDate, endDate, reportType) {
+                const filteredSales = allSales.filter(sale => {
+                    const saleDate = sale.createdAt.toDate();
+                    return saleDate >= startDate && saleDate <= endDate;
+                });
+                if (filteredSales.length === 0) { alert(`No sales data found for the selected ${reportType} period.`); return; }
+                let totalSales = 0, totalVat = 0, totalProfit = 0;
+                const productSummary = {}, cashierSummary = {};
+                const transactionRows = filteredSales.map(sale => {
+                    totalSales += sale.total; totalVat += sale.vat; let saleProfit = 0;
+                    const itemsString = sale.items.map(item => {
+                        const product = allProducts.find(p => p.id === item.id);
+                        const cost = (product && typeof product.costPrice !== 'undefined') ? product.costPrice : 0;
+                        const priceAfterDiscount = item.price * (1 - ((item.discount_percentage || 0) / 100));
+                        const profit = (priceAfterDiscount - cost) * item.qty;
+                        saleProfit += profit;
+                        productSummary[item.name] = (productSummary[item.name] || 0) + item.qty;
+                        return `${item.name} (x${item.qty})`;
+                    }).join(' | ');
+                    totalProfit += saleProfit;
+                    const cashierName = sale.cashierName || 'N/A';
+                    cashierSummary[cashierName] = (cashierSummary[cashierName] || 0) + sale.total;
+                    const customer = sale.customer || {};
+                    return [ sale.createdAt.toDate().toLocaleString(), cashierName, customer.name || 'N/A', customer.phone || 'N/A', `${customer.apartment || ''} - ${customer.house || ''}`, itemsString, sale.subtotal.toFixed(2), sale.vat.toFixed(2), sale.total.toFixed(2), saleProfit.toFixed(2) ];
+                });
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += `SMART SUPPLIERS SALES REPORT\n`;
+                csvContent += `Period,"${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}"\n\n`;
+                csvContent += "SALES SUMMARY\nTotal Sales (inc. VAT),Total VAT,Estimated Gross Profit\n";
+                csvContent += `${totalSales.toFixed(2)},${totalVat.toFixed(2)},${totalProfit.toFixed(2)}\n\n`;
+                csvContent += "DETAILED TRANSACTION LOG\n";
+                const transactionHeaders = ["Date/Time", "Cashier", "Customer Name", "Customer Phone", "Customer Address", "Items Sold", "Subtotal", "VAT", "Total", "Est. Profit"];
+                csvContent += transactionHeaders.join(",") + "\n";
+                transactionRows.forEach(row => { csvContent += row.map(field => `"${field}"`).join(",") + "\n"; });
+                csvContent += "\nSALES BY PRODUCT\nProduct,Total Quantity Sold\n";
+                Object.entries(productSummary).forEach(([name, qty]) => { csvContent += `"${name}",${qty}\n`; });
+                csvContent += "\nSALES BY CASHIER\nCashier,Total Sales Value\n";
+                Object.entries(cashierSummary).forEach(([name, total]) => { csvContent += `"${name}",${total.toFixed(2)}\n`; });
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `SmartSuppliers_${reportType}_Report_${startDate.toISOString().slice(0,10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            document.getElementById('download-daily-report').addEventListener('click', () => { const dateVal = document.getElementById('daily-report-date').value; if (!dateVal) { alert("Please select a date for the daily report."); return; } const startDate = new Date(dateVal); startDate.setHours(0, 0, 0, 0); const endDate = new Date(dateVal); endDate.setHours(23, 59, 59, 999); generateReport(startDate, endDate, 'Daily'); });
+            document.getElementById('download-weekly-report').addEventListener('click', () => { const today = new Date(); const dayOfWeek = today.getDay(); const startDate = new Date(today); startDate.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); startDate.setHours(0, 0, 0, 0); const endDate = new Date(startDate); endDate.setDate(startDate.getDate() + 6); endDate.setHours(23, 59, 59, 999); generateReport(startDate, endDate, 'Weekly'); });
+            document.getElementById('download-monthly-report').addEventListener('click', () => { const today = new Date(); const startDate = new Date(today.getFullYear(), today.getMonth(), 1); startDate.setHours(0, 0, 0, 0); const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); endDate.setHours(23, 59, 59, 999); generateReport(startDate, endDate, 'Monthly'); });
+            let salesChart;
+            function setupAnalytics() {
+                const ctx = document.getElementById('sales-chart').getContext('2d');
+                salesChart = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [{ label: 'Sales per Day (Last 30 Days)', data: [], borderColor: '#f97316', tension: 0.1 }] }, options: { responsive: true, maintainAspectRatio: false } });
+            }
+            function updateSalesChart(sales) {
+                if (!salesChart) return;
+                const salesByDay = {};
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                sales.forEach(sale => {
+                    if (sale.createdAt && sale.createdAt.toDate) {
+                        const saleDate = sale.createdAt.toDate();
+                        if (saleDate >= thirtyDaysAgo) {
+                            const day = saleDate.toISOString().split('T')[0];
+                            salesByDay[day] = (salesByDay[day] || 0) + sale.total;
+                        }
+                    }
+                });
+                const sortedDays = Object.keys(salesByDay).sort();
+                salesChart.data.labels = sortedDays.map(day => new Date(day).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                salesChart.data.datasets[0].data = sortedDays.map(day => salesByDay[day]);
+                salesChart.update();
+            }
+
+            // --- ORIGINAL Offline DB Logic (PRESERVED) ---
+            let offlineDB;
+            async function openOfflineDB() {
+                if (offlineDB) return offlineDB;
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open('SmartSuppliersOfflineDB', 1);
+                    request.onerror = (event) => reject("Error opening IndexedDB");
+                    request.onsuccess = (event) => { offlineDB = event.target.result; resolve(offlineDB); };
+                    request.onupgradeneeded = (event) => { const db = event.target.result; db.createObjectStore('offlineSales', { autoIncrement: true }); };
+                });
+            }
+            async function initOfflineSync() { await openOfflineDB(); window.addEventListener('online', syncOfflineSales); syncOfflineSales(); }
+            async function syncOfflineSales() {
+                if (!navigator.onLine) return;
+                console.log("Online. Checking for offline sales to sync...");
+                const db = await openOfflineDB();
+                const tx = db.transaction('offlineSales', 'readwrite');
+                const store = tx.objectStore('offlineSales');
+                const offlineSales = await store.getAll();
+                if (offlineSales.length === 0) { console.log("No offline sales to sync."); return; }
+                alert(`Syncing ${offlineSales.length} offline sale(s)...`);
+                const batch = writeBatch(db);
+                for (const sale of offlineSales) {
+                    const salesRef = doc(collection(db, "sales"));
+                    sale.createdAt = serverTimestamp(); 
+                    batch.set(salesRef, sale);
+                    sale.items.forEach(item => { const productRef = doc(db, "products", item.id); batch.update(productRef, { stock: increment(-item.qty) }); });
+                }
+                try {
+                    await batch.commit();
+                    console.log("Batch commit successful.");
+                    const clearTx = db.transaction('offlineSales', 'readwrite');
+                    await clearTx.objectStore('offlineSales').clear();
+                    alert("Offline sales synced successfully!");
+                } catch (error) {
+                    console.error("Error syncing offline sales:", error);
+                    alert("Failed to sync offline sales. They will be retried later.");
+                }
+            }
+            
+            // --- ADDED: WebAuthn (Fingerprint) Functions ---
             const registerFingerprintBtn = document.getElementById('register-fingerprint-btn');
             const fingerprintLoginBtn = document.getElementById('fingerprint-login-btn');
-
             if (window.PublicKeyCredential) {
                 PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(available => {
                     if (available) { fingerprintLoginBtn.classList.remove('hidden'); }
                 });
             }
-
             registerFingerprintBtn.addEventListener('click', async () => {
-                if (!auth.currentUser) return alert("You must be logged in to register a fingerprint.");
-                
+                 if (!auth.currentUser) return alert("You must be logged in to register a fingerprint.");
                 try {
                     const generateRegOptions = httpsCallable(functions, 'webAuthnGenerateRegistrationOptions');
                     const options = (await generateRegOptions()).data;
-                    
                     const registration = await startRegistration(options);
-                    
                     const verifyReg = httpsCallable(functions, 'webAuthnVerifyRegistration');
                     const verificationResult = (await verifyReg(registration)).data;
-
                     if (verificationResult.verified) {
                         alert("Fingerprint registered successfully!");
-                    } else {
-                        alert("Verification failed: " + verificationResult.error);
-                    }
+                    } else { alert("Verification failed: " + verificationResult.error); }
                 } catch (error) {
                     console.error("Registration error:", error);
                     alert("Could not register fingerprint. " + error.message);
                 }
             });
-
             fingerprintLoginBtn.addEventListener('click', async () => {
                 try {
                     const generateAuthOptions = httpsCallable(functions, 'webAuthnGenerateAuthenticationOptions');
                     const options = (await generateAuthOptions()).data;
-                    
                     const authentication = await startAuthentication(options);
-                    
                     const verifyAuth = httpsCallable(functions, 'webAuthnVerifyAuthentication');
                     const verificationResult = (await verifyAuth(authentication)).data;
-
                     if (verificationResult.verified) {
                         await signInWithCustomToken(auth, verificationResult.token);
-                    } else {
-                         loginErrorMessage.textContent = "Fingerprint login failed.";
-                    }
+                    } else { loginErrorMessage.textContent = "Fingerprint login failed."; }
                 } catch (error) {
                      console.error("Authentication error:", error);
-                     loginErrorMessage.textContent = "Fingerprint login failed. " + error.message;
+                     loginErrorMessage.textContent = "Fingerprint login failed: " + error.message;
                 }
             });
         });
     </script>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+        let deferredPrompt;
+        const installButtons = [document.getElementById('admin-install-app-btn'), document.getElementById('servant-install-app-btn')];
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!window.matchMedia('(display-mode: standalone)').matches) {
+                installButtons.forEach(btn => { if(btn) btn.classList.remove('hidden') });
+            }
+        });
+        installButtons.forEach(btn => {
+            if(btn) {
+                btn.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        deferredPrompt = null;
+                        installButtons.forEach(b => { if(b) b.classList.add('hidden') });
+                    }
+                });
+            }
+        });
+        window.addEventListener('appinstalled', () => {
+            deferredPrompt = null;
+            installButtons.forEach(b => { if(b) b.classList.add('hidden') });
+        });
+    </script>
+
 </body>
 </html>
